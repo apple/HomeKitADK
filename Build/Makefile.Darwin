@@ -1,0 +1,40 @@
+TARGET_FLAVOR ?= macosx
+
+XCODE_SDK_macosx := macosx
+XCODE_TOOLCHAIN_macosx := XcodeDefault
+CFLAGS_macosx := -mmacosx-version-min=10.14
+
+XCODE_SDK_ios := iphoneos13.0.internal
+XCODE_TOOLCHAIN_ios := iOS13.0
+CFLAGS_ios := -arch arm64 -mios-version-min=13.0
+
+XCODE_SDK := $(XCODE_SDK_$(TARGET_FLAVOR))
+
+XCODE_RUN := xcrun --sdk $(XCODE_SDK) --toolchain $(XCODE_TOOLCHAIN_$(TARGET_FLAVOR))
+XCODE_SDK_PATH := $(shell $(XCODE_RUN) --show-sdk-path)
+
+CC := $(shell $(XCODE_RUN) -find clang)
+AR := ar
+COMPILER := $(shell $(CC) --version | grep "Target:" | cut -d ' ' -f 2)
+DEBUGGER := lldb
+
+SRC_DIRS_Darwin := PAL/Darwin Common
+CRYPTO_Darwin := PAL/Crypto/OpenSSL PAL/Crypto/MbedTLS
+
+CFLAGS_m := -fobjc-arc -Wno-ignored-attributes -Wno-unguarded-availability-new -Wno-availability -Wunused-function
+CFLAGS_Darwin := $(CFLAGS_$(TARGET_FLAVOR)) $(CFLAGS_BLE) $(CFLAGS_IP)
+CFLAGS_Darwin += -DDARWIN=1 -Werror=unused-function
+CFLAGS_Darwin += -Wno-expansion-to-defined -Wno-nullability-completeness -Wno-deprecated-declarations
+CFLAGS_Darwin += -I$(XCODE_SDK_PATH)/usr/include -F$(XCODE_SDK_PATH)/System/Library/Frameworks
+LDFLAGS_Darwin := $(addprefix -framework ,Foundation CoreBluetooth Network CoreGraphics ImageIO CoreServices)
+ifeq ($(BUILD_TYPE),Release)
+    LDFLAGS_Darwin += -dead_strip
+endif
+
+EXCLUDE_Darwin := \
+    Tests/HAPPlatformSystemCommandTest.c \
+    PAL/Mock/HAPPlatformSystemCommand.c
+
+SKIPPED_TESTS_Darwin := HAPExhaustiveUTF8Test
+
+PROTOCOLS_Darwin := IP BLE

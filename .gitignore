@@ -1,0 +1,18 @@
+## Build generated
+Output/
+
+# Exclude .DS_Store
+.DS_Store
+
+# VIM temporary files
+*.swp
+*.swo
+*.tags*
+
+# Pycharm temporary files
+.idea/
+
+.HomeKitStore
+
+# Open source export
+export/

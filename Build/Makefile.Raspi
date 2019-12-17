@@ -1,0 +1,29 @@
+
+CC := clang
+AR := ar
+COMPILER := $(shell $(CC) --version | grep "Target:" | cut -d ' ' -f 2)
+DEBUGGER := gdb
+
+SRC_DIRS_Raspi := PAL/Raspi
+CRYPTO_Raspi := PAL/Crypto/OpenSSL
+
+CFLAGS_Raspi := $(CFLAGS_IP) -ffunction-sections -fdata-sections
+CFLAGS_Raspi += -DLED_PORT=\"/sys/class/leds/led0/brightness\"
+CFLAGS_Raspi += -DLED_TRIGGER=\"/sys/class/leds/led0/trigger\"
+
+CFLAGS_Raspi += -DRPI
+CFLAGS_Raspi += -I/opt/vc/include
+
+LDFLAGS_Raspi := -L/opt/vc/lib
+LDFLAGS_Raspi += -ldns_sd -lsqlite3 -pthread -lasound -lopus -lfaac -lm -lnfc
+LDFLAGS_Raspi += -lbcm_host -lmmal -lmmal_core -lmmal_components -lmmal_util -lvcos
+ifeq ($(BUILD_TYPE),Release)
+    LDFLAGS_Raspi += -Wl,--gc-sections -Wl,--as-needed -Wl,--strip-all
+endif
+
+LINK_BEGIN_Raspi := -Wl,--start-group
+LINK_END_Raspi := -Wl,--end-group
+
+SKIPPED_TESTS_Raspi := HAPExhaustiveUTF8Test
+
+PROTOCOLS_Raspi := IP
