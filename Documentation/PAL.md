@@ -110,11 +110,11 @@ int HAP_chacha20_poly1305_final_dec(HAP_chacha20_poly1305_ctx *ctx,
                                     const uint8_t tag[CHACHA20_POLY1305_TAG_BYTES]);
 ```
 
-Note: *The implementation must support overlappong buffers (m and c).*
+Note: *The implementation must support overlapping buffers (m and c).*
 
 If HAVE_CUSTOM_SINGLE_SHOT_CHACHA20_POLY1305 is not set, we synthesize a single shot API from
 the streaming API above. Otherwise the backend must provide the following API. This is
-recommendef for BLE-only crypto backends. *The streaming API is needed by IP accessories only.*
+recommended for BLE-only crypto backends. *The streaming API is needed by IP accessories only.*
 
 ```
 void HAP_chacha20_poly1305_encrypt_aad(uint8_t tag[CHACHA20_POLY1305_TAG_BYTES],
