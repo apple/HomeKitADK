@@ -1,6 +1,6 @@
-# HomeKit ADK Platform Adaption Layer (PAL)
+# HomeKit ADK Platform Abstraction Layer (PAL)
 
-This document describes the ADK PAL and how to port the ADK to new platform.
+This document describes the ADK PAL and how to port the ADK to a new platform.
 
 ## Supported platforms
 
@@ -18,9 +18,9 @@ Additional platforms can be supported by providing a custom PAL implementation.
 
 ## Design considerations
 
-The PAL abstracts all aspects of the underlying platform. Currently the PAL attempts to avoid
-memory allocations. This is not necessary a design goal we'll maintain going forward. The
-PAL has 3 build types: Test, Debug, and Release. Test uses the Mock PAL and is used for unit
+The PAL abstracts all relevant aspects of the underlying platform. Currently the PAL attempts to avoid
+memory allocations. This is not necessarily a design goal we'll maintain going forward. The
+PAL has three build types: Test, Debug, and Release. Test uses the Mock PAL and is used for unit
 tests. Debug and Release use platform-specific backends.
 
 ### Configuration and weak symbols
@@ -37,7 +37,7 @@ across BLE and IP.
 EdDSA (Edwards-curve Digital Signature Algorithm) signature scheme using SHA-512 and Curve25519.
 
 *MbedTLS does not natively support Ed25519. We ship a performant software-only implementation
-along with our MbedTLS implementation but we strongly encourage silicon vendors to substitue
+along with our MbedTLS implementation but we strongly encourage silicon vendors to substitute
 their own production quality implementation (or hardware accelerated implementation).*
 
 To disable our implementation we recommend including the C file of our bindings in a new C file and
@@ -110,11 +110,11 @@ int HAP_chacha20_poly1305_final_dec(HAP_chacha20_poly1305_ctx *ctx,
                                     const uint8_t tag[CHACHA20_POLY1305_TAG_BYTES]);
 ```
 
-Note: *The implementation must support overlappong buffers (m and c).*
+Note: *The implementation must support overlapping buffers (m and c).*
 
 If HAVE_CUSTOM_SINGLE_SHOT_CHACHA20_POLY1305 is not set, we synthesize a single shot API from
 the streaming API above. Otherwise the backend must provide the following API. This is
-recommendef for BLE-only crypto backends. *The streaming API is needed by IP accessories only.*
+recommended for BLE-only crypto backends. *The streaming API is needed by IP accessories only.*
 
 ```
 void HAP_chacha20_poly1305_encrypt_aad(uint8_t tag[CHACHA20_POLY1305_TAG_BYTES],
