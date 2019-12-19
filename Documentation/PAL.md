@@ -20,7 +20,7 @@ Additional platforms can be supported by providing a custom PAL implementation.
 
 The PAL abstracts all relevant aspects of the underlying platform. Currently the PAL attempts to avoid
 memory allocations. This is not necessarily a design goal we'll maintain going forward. The
-PAL has three build types: Test, Debug, and Release. Test uses the Mock PAL and is used for unit
+PAL has 3 build types: Test, Debug, and Release. Test uses the Mock PAL and is used for unit
 tests. Debug and Release use platform-specific backends.
 
 ### Configuration and weak symbols
