@@ -1,7 +1,6 @@
 FROM balenalib/raspberrypi3:latest
 
 # Add the non-free source for libfaac
-#echo &&  \
 RUN echo && echo ==== Complete apt sources to grasp non-free ===== && echo \
   && echo "deb [trusted=yes] http://ftp.uni-kl.de/debian-multimedia/ stable main" >> /etc/apt/sources.list.d/hap.list \
   && apt-get update  > /dev/null 2>&1 \
