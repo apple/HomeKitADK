@@ -1,7 +1,37 @@
-# Build stage
-FROM dev-test/raspiadk-base as build
+FROM balenalib/raspberrypi3:latest
+
+# Add the non-free source for libfaac
+#echo &&  \
+RUN echo && echo ==== Complete apt sources to grasp non-free ===== && echo \
+  && echo "deb [trusted=yes] http://ftp.uni-kl.de/debian-multimedia/ stable main" >> /etc/apt/sources.list.d/hap.list \
+  && apt-get update  > /dev/null 2>&1 \
+  && apt-get install -y apt-utils > /dev/null 2>&1
+
+RUN echo && echo ======== Perform latest security updates ======== && echo \
+  && (apt-get upgrade -y \
+  && apt-get autoremove -y) > /dev/null 2>&1
+
+RUN echo && echo ============= Install dependencies ============== && echo \
+  && apt-get install -y \
+    clang \
+    git \
+    make \
+    perl \
+    python3-pip \
+    unzip \
+    wget \
+    libasound2-dev \
+    libavahi-compat-libdnssd-dev \
+    libfaac-dev \
+    libnfc-dev \
+    libopus-dev \
+    libsqlite3-dev \
+    libssl-dev > /dev/null 2>&1
+
+RUN echo && echo =============== Install debugger ================ && echo \ 
+  && apt-get install -y gdb > /dev/null 2>&1
+
+RUN echo && echo =================== Cleanup ===================== && echo \
+  && rm -rf /var/lib/apt/lists/* /dev/null 2>&1
 
 WORKDIR /build
-
-# Only package the build image. The built image won't have any test artifacts in it
-FROM build
