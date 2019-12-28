@@ -25,7 +25,7 @@ void HAPPlatformKeyValueStoreCreate(
 
     NSError* error;
     NSData* data = [NSData dataWithContentsOfFile:@(keyValueStore->rootDirectory) options:0 error:&error];
-    KeyValueStore = [NSKeyedUnarchiver unarchivedObjectOfClasses:[NSSet setWithArray:@[[NSArray class], [NSData class]]]
+    KeyValueStore = [NSKeyedUnarchiver unarchivedObjectOfClasses:[NSSet setWithArray:@[[NSMutableDictionary class]]]
                                                         fromData:data
                                                            error:&error];
     if (!KeyValueStore) {
