@@ -9,7 +9,12 @@
 #import <Foundation/Foundation.h>
 
 static NSTimer* scheduleTimer(HAPTime deadline, HAPPlatformTimerCallback callback, void* _Nullable context) {
-    NSTimeInterval interval = ((NSTimeInterval) deadline) / 1000.0;
+    NSTimeInterval interval = 0;
+    HAPTime currentTime = HAPPlatformClockGetCurrent();
+
+    if (deadline > currentTime) {
+        interval = ((NSTimeInterval)(deadline - currentTime)) / 1000.0;
+    }
 
     NSTimer* t = [NSTimer
             scheduledTimerWithTimeInterval:interval
