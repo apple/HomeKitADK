@@ -186,6 +186,8 @@ static id pop(NSMutableArray* array) {
     dispatch_async(dispatch_get_main_queue(), ^{
         HAPLog(&logObject, "willRestoreState");
     });
+
+    (void) dict;
 }
 
 - (void)peripheralManager:(CBPeripheralManager*)peripheral didAddService:(CBService*)service error:(NSError*)error {
@@ -194,6 +196,9 @@ static id pop(NSMutableArray* array) {
     dispatch_async(dispatch_get_main_queue(), ^{
         HAPLog(&logObject, "didAddService");
     });
+
+    (void) service;
+    (void) error;
 }
 
 - (void)peripheralManagerDidStartAdvertising:(CBPeripheralManager*)peripheral error:(NSError*)error {
@@ -202,6 +207,9 @@ static id pop(NSMutableArray* array) {
     dispatch_async(dispatch_get_main_queue(), ^{
         HAPLog(&logObject, "peripheralManagerDidStartAdvertising");
     });
+
+    (void) peripheral;
+    (void) error;
 }
 
 - (void)peripheralManager:(CBPeripheralManager*)peripheral
@@ -214,6 +222,8 @@ static id pop(NSMutableArray* array) {
 
         [self updateCentralConnection:central];
     });
+
+    (void) characteristic;
 }
 
 - (void)peripheralManager:(CBPeripheralManager*)peripheral
@@ -226,6 +236,9 @@ static id pop(NSMutableArray* array) {
 
         [self updateCentralConnection:nil];
     });
+
+    (void) central;
+    (void) characteristic;
 }
 
 - (void)peripheralManagerIsReadyToUpdateSubscribers:(CBPeripheralManager*)peripheral {
@@ -303,6 +316,7 @@ static id pop(NSMutableArray* array) {
 }
 
 - (uint16_t)getHandleForCentral:(CBCentral*)central {
+    (void) central;
     return [self getHandleForString:_connectedCentral.identifier.UUIDString];
 }
 
@@ -579,7 +593,7 @@ HAP_RESULT_USE_CHECK
 HAPError HAPPlatformBLEPeripheralManagerAddDescriptor(
         HAPPlatformBLEPeripheralManagerRef blePeripheralManager,
         const HAPPlatformBLEPeripheralManagerUUID* type,
-        HAPPlatformBLEPeripheralManagerDescriptorProperties properties,
+        HAPPlatformBLEPeripheralManagerDescriptorProperties properties HAP_UNUSED,
         const void* _Nullable constBytes,
         size_t constNumBytes,
         HAPPlatformBLEPeripheralManagerAttributeHandle* descriptorHandle) {
@@ -647,7 +661,7 @@ void HAPPlatformBLEPeripheralManagerStopAdvertising(HAPPlatformBLEPeripheralMana
 
 void HAPPlatformBLEPeripheralManagerCancelCentralConnection(
         HAPPlatformBLEPeripheralManagerRef blePeripheralManager,
-        HAPPlatformBLEPeripheralManagerConnectionHandle connectionHandle) {
+        HAPPlatformBLEPeripheralManagerConnectionHandle connectionHandle HAP_UNUSED) {
     HAPPrecondition(blePeripheralManager);
 
     HAPLog(&logObject, __func__);

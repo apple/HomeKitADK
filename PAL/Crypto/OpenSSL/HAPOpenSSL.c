@@ -55,7 +55,7 @@ void HAP_ed25519_sign(
         const uint8_t* m,
         size_t m_len,
         const uint8_t sk[ED25519_SECRET_KEY_BYTES],
-        const uint8_t pk[ED25519_PUBLIC_KEY_BYTES]) {
+        const uint8_t pk[ED25519_PUBLIC_KEY_BYTES] HAP_UNUSED) {
     WITH_PKEY(key, EVP_PKEY_new_raw_private_key(EVP_PKEY_ED25519, NULL, sk, ED25519_SECRET_KEY_BYTES), {
         WITH_CTX(EVP_MD_CTX, EVP_MD_CTX_new(), {
             int ret = EVP_DigestSignInit(ctx, NULL, NULL, NULL, key);
@@ -436,9 +436,9 @@ static void copy_and_free_if_overlapping(uint8_t** tmp, uint8_t** out, size_t n)
 
 void HAP_chacha20_poly1305_init(
         HAP_chacha20_poly1305_ctx* ctx,
-        const uint8_t* n,
-        size_t n_len,
-        const uint8_t k[CHACHA20_POLY1305_KEY_BYTES]) {
+        const uint8_t* n HAP_UNUSED,
+        size_t n_len HAP_UNUSED,
+        const uint8_t k[CHACHA20_POLY1305_KEY_BYTES] HAP_UNUSED) {
     EVP_CIPHER_CTX_Handle* handle = (EVP_CIPHER_CTX_Handle*) ctx;
     handle->ctx = NULL;
 }
@@ -469,7 +469,7 @@ void HAP_chacha20_poly1305_update_enc(
         int c_len;
         ret = EVP_EncryptUpdate(handle->ctx, use_temporary_if_overlapping(&tmp, m, c, m_len), &c_len, m, m_len);
         copy_and_free_if_overlapping(&tmp, &c, m_len);
-        HAPAssert(ret == 1 && c_len == m_len);
+        HAPAssert(ret == 1 && (size_t) c_len == m_len);
     }
 }
 
@@ -484,7 +484,7 @@ void HAP_chacha20_poly1305_update_enc_aad(
     EVP_CIPHER_CTX_Handle* handle = (EVP_CIPHER_CTX_Handle*) ctx;
     int a_out;
     int ret = EVP_EncryptUpdate(handle->ctx, NULL, &a_out, a, a_len);
-    HAPAssert(ret == 1 && a_out == a_len);
+    HAPAssert(ret == 1 && (size_t) a_out == a_len);
 }
 
 void HAP_chacha20_poly1305_final_enc(HAP_chacha20_poly1305_ctx* ctx, uint8_t tag[CHACHA20_POLY1305_TAG_BYTES]) {
@@ -537,7 +537,7 @@ void HAP_chacha20_poly1305_update_dec_aad(
     EVP_CIPHER_CTX_Handle* handle = (EVP_CIPHER_CTX_Handle*) ctx;
     int a_out;
     int ret = EVP_DecryptUpdate(handle->ctx, NULL, &a_out, a, a_len);
-    HAPAssert(ret == 1 && a_out == a_len);
+    HAPAssert(ret == 1 && (size_t) a_out == a_len);
 }
 
 int HAP_chacha20_poly1305_final_dec(HAP_chacha20_poly1305_ctx* ctx, const uint8_t tag[CHACHA20_POLY1305_TAG_BYTES]) {
@@ -567,7 +567,7 @@ void HAP_aes_ctr_encrypt(HAP_aes_ctr_ctx* ctx, uint8_t* ct, const uint8_t* pt, s
     EVP_CIPHER_CTX_Handle* handle = (EVP_CIPHER_CTX_Handle*) ctx;
     int ct_len;
     int ret = EVP_EncryptUpdate(handle->ctx, ct, &ct_len, pt, pt_len);
-    HAPAssert(ret == 1 && ct_len == pt_len);
+    HAPAssert(ret == 1 && (size_t) ct_len == pt_len);
 }
 
 void HAP_aes_ctr_decrypt(HAP_aes_ctr_ctx* ctx, uint8_t* pt, const uint8_t* ct, size_t ct_len) {

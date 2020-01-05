@@ -44,8 +44,8 @@ static NSMutableArray<Connection*>* socketsWaitingToBeAccepted = nil;
 static NSMutableArray<Connection*>* connections = nil;
 
 void HAPPlatformTCPStreamManagerCreate(
-        HAPPlatformTCPStreamManagerRef _Nonnull tcpStreamManager,
-        const HAPPlatformTCPStreamManagerOptions* options) {
+        HAPPlatformTCPStreamManagerRef _Nonnull tcpStreamManager HAP_UNUSED,
+        const HAPPlatformTCPStreamManagerOptions* options HAP_UNUSED) {
     socketsWaitingToBeAccepted = [[NSMutableArray alloc] init];
     connections = [[NSMutableArray alloc] init];
 }
@@ -129,7 +129,10 @@ static void WaitForMoreDataInBackground(Connection* connection) {
             connection.socket,
             1,
             4096,
-            ^(dispatch_data_t data, nw_content_context_t context, bool is_complete, nw_error_t error) {
+            ^(dispatch_data_t data,
+              nw_content_context_t context HAP_UNUSED,
+              bool is_complete HAP_UNUSED,
+              nw_error_t error) {
                 if (error) {
                     return;
                 }

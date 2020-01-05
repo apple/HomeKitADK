@@ -16,6 +16,7 @@ void HAPPlatformServiceDiscoveryCreate(
         HAPPlatformServiceDiscoveryRef serviceDiscovery,
         const HAPPlatformServiceDiscoveryOptions* options) {
     HAPPrecondition(serviceDiscovery);
+    (void) options;
 }
 
 void HAPPlatformServiceDiscoveryRegister(

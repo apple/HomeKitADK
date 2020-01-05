@@ -127,7 +127,7 @@ static int Test(int argc, const char* argv[]) {
     return 0;
 }
 
-int main(int argc, char* argv[]) {
+int main(int argc HAP_UNUSED, char* argv[] HAP_UNUSED) {
     for (size_t i = 0; i < HAPArrayCount(TestArgs); ++i) {
         HAPAssert(Test(TestArgs[i][6] ? 7 : 6, TestArgs[i]) == 0);
     }

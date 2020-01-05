@@ -10,7 +10,7 @@ PAL ?= $(PLATFORM)
 BUILD_TYPE ?= Debug
 
 SRC_DIRS := HAP External/HTTP External/JSON External/Base64 PAL PAL/Mock
-CFLAGS := -Wall -Werror -DHAP_ENABLE_DEVELOPMENT_ONLY_CODE=1
+CFLAGS := -Wall -Wextra -Werror -DHAP_ENABLE_DEVELOPMENT_ONLY_CODE=1
 LDFLAGS :=
 
 BUILD_TYPES := Debug Test Release

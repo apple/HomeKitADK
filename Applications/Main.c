@@ -277,7 +277,7 @@ static void InitializeBLE() {
 }
 #endif
 
-int main(int argc, char* _Nullable argv[_Nullable]) {
+int main(int argc HAP_UNUSED, char* _Nullable argv[_Nullable] HAP_UNUSED) {
     HAPAssert(HAPGetCompatibilityVersion() == HAP_COMPATIBILITY_VERSION);
 
     // Initialize global platform objects.

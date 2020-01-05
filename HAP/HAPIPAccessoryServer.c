@@ -564,7 +564,7 @@ static void prepare_reading_request(HAPIPSessionDescriptor* session) {
 
 static void handle_input(HAPIPSessionDescriptor* session);
 
-static void post_resource(HAPIPSessionDescriptor* session) {
+static void post_resource(HAPIPSessionDescriptor* session HAP_UNUSED) {
 }
 
 static void put_prepare(HAPIPSessionDescriptor* session) {
