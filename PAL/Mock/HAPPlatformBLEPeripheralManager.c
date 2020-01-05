@@ -142,8 +142,8 @@ HAPError HAPPlatformBLEPeripheralManagerAddCharacteristic(
         HAPPlatformBLEPeripheralManagerRef _Nonnull blePeripheralManager,
         const HAPPlatformBLEPeripheralManagerUUID* _Nonnull type,
         HAPPlatformBLEPeripheralManagerCharacteristicProperties properties,
-        const void* _Nullable constBytes,
-        size_t constNumBytes,
+        const void* _Nullable constBytes HAP_UNUSED,
+        size_t constNumBytes HAP_UNUSED,
         HAPPlatformBLEPeripheralManagerAttributeHandle* _Nonnull valueHandle,
         HAPPlatformBLEPeripheralManagerAttributeHandle* _Nullable cccDescriptorHandle) {
     HAPPrecondition(blePeripheralManager);
@@ -231,8 +231,8 @@ HAPError HAPPlatformBLEPeripheralManagerAddDescriptor(
         HAPPlatformBLEPeripheralManagerRef _Nonnull blePeripheralManager,
         const HAPPlatformBLEPeripheralManagerUUID* _Nonnull type,
         HAPPlatformBLEPeripheralManagerDescriptorProperties properties,
-        const void* _Nullable constBytes,
-        size_t constNumBytes,
+        const void* _Nullable constBytes HAP_UNUSED,
+        size_t constNumBytes HAP_UNUSED,
         HAPPlatformBLEPeripheralManagerAttributeHandle* _Nonnull descriptorHandle) {
     HAPPrecondition(blePeripheralManager);
     HAPPrecondition(!blePeripheralManager->didPublishAttributes);

@@ -95,7 +95,7 @@ int HAP_ed25519_verify(
 
 #endif
 
-static int blinding_rng(void* context, uint8_t* buffer, size_t n) {
+static int blinding_rng(void* context HAP_UNUSED, uint8_t* buffer, size_t n) {
     HAPPlatformRandomNumberFill(buffer, n);
     return 0;
 }
@@ -577,9 +577,9 @@ void chacha20_poly1305_final(HAP_chacha20_poly1305_ctx* ctx, uint8_t tag[CHACHA2
 
 void HAP_chacha20_poly1305_init(
         HAP_chacha20_poly1305_ctx* ctx,
-        const uint8_t* n,
-        size_t n_len,
-        const uint8_t k[CHACHA20_POLY1305_KEY_BYTES]) {
+        const uint8_t* n HAP_UNUSED,
+        size_t n_len HAP_UNUSED,
+        const uint8_t k[CHACHA20_POLY1305_KEY_BYTES] HAP_UNUSED) {
     mbedtls_chachapoly_context_Handle* handle = (mbedtls_chachapoly_context_Handle*) ctx;
     handle->ctx = NULL;
 }

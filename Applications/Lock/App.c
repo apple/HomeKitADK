@@ -327,9 +327,9 @@ const HAPAccessory* AppGetAccessoryInfo() {
 }
 
 void AppInitialize(
-        HAPAccessoryServerOptions* hapAccessoryServerOptions,
-        HAPPlatform* hapPlatform,
-        HAPAccessoryServerCallbacks* hapAccessoryServerCallbacks) {
+        HAPAccessoryServerOptions* hapAccessoryServerOptions HAP_UNUSED,
+        HAPPlatform* hapPlatform HAP_UNUSED,
+        HAPAccessoryServerCallbacks* hapAccessoryServerCallbacks HAP_UNUSED) {
     /*no-op*/
 }
 

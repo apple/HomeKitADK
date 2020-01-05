@@ -21,7 +21,7 @@ DEBUGGER := lldb
 SRC_DIRS_Darwin := PAL/Darwin Common
 CRYPTO_Darwin := PAL/Crypto/OpenSSL PAL/Crypto/MbedTLS
 
-CFLAGS_m := -fobjc-arc -Wno-ignored-attributes -Wno-unguarded-availability-new -Wno-availability -Wunused-function
+CFLAGS_m := -fobjc-arc -Wno-ignored-attributes -Wno-unguarded-availability-new -Wno-availability -Wunused-function -Wno-error=missing-method-return-type -Wno-error=unused-parameter
 CFLAGS_Darwin := $(CFLAGS_$(TARGET_FLAVOR)) $(CFLAGS_BLE) $(CFLAGS_IP)
 CFLAGS_Darwin += -DDARWIN=1 -Werror=unused-function
 CFLAGS_Darwin += -Wno-expansion-to-defined -Wno-nullability-completeness -Wno-deprecated-declarations
