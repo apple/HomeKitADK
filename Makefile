@@ -8,10 +8,12 @@ MAKE := make -f Build/Makefile -j 8
 DOCKER := docker
 DOCKERFILE := Build/Docker/Dockerfile
 RUN := $(DOCKER) run \
-  -e PROTOCOLS \
-  -e USE_HW_AUTH \
-  -e TARGET \
   -e APPS \
+  -e LOG_LEVEL \
+  -e PROTOCOLS \
+  -e TARGET \
+  -e USE_HW_AUTH \
+  -e USE_NFC \
   --cap-add=SYS_PTRACE \
   --security-opt seccomp=unconfined \
   --mount type=bind,source="$(CWD)",target=/build \
