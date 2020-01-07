@@ -26,18 +26,6 @@ brew install mbedtls --HEAD
 ```sh
 make all
 ```
-##### Make options
-All of the feature items below are disabled by default
-
-To build with Hardware Authentication
-```sh
-make USE_HW_AUTH=1 all
-```
-
-To build with NFC enabled
-```sh
-make USE_NFC=1 all
-```
 
 #### Run
 ```sh
@@ -88,3 +76,15 @@ If docker doesn't find "dev-test/raspiadk-base", run the sdcard setup and make s
     -n raspberrypi \
     -p pi
 ```
+
+#### Make options
+Commmand                         | Description                                                                                       | Default
+-------------------------------- | ------------------------------------------------------------------------------------------------- | -------------
+make \<target\>                  | <ul><li>`apps` - Build all apps</li></li><li>`test` - Build unit tests</li><li>`all` - Build apps and unit tests</li></ul>            | all
+make APPS=\<application\>        | Space delimited names of the apps to compile. Example:<br>`make APPS=“Lightbulb Lock”`                                        | All applications
+make BUILD_TYPE=\<build_type\>   | Build type: <br><ul><li>`Debug`</li><li>`Test`</li><li>`Release`</ul>                                   | `Debug`
+make LOG_LEVEL=\<level\>         | <ul><li>`0` - No logs are displayed</li><li>`1`	- Error and Fault-level logs are displayed</li><li>`2` - Error, Fault-level and Info logs are displayed</li><li>`3` - Error, Fault-level, Info and Debug logs are displayed</li></ul>|<ul><li>`3` - For debug build</li><li>`1` - For test build</li><li>`0` - For release build</li></ul>
+make PROTOCOLS=\<protocol\>      | Space delimited protocols supported by the applications: <br><ul><li>`BLE`</li><li>`IP`</li></ul>Example: `make PROTOCOLS=“IP BLE”`                                     | All protocols
+make TARGET=\<platform\>         | Build for a given target platform:<br><ul><li>`Darwin`</li><li>`Linux`</li><li>`Raspi`</li></ul>    | Build for the host Platform
+make USE_HW_AUTH=\<enable\>      | Build with hardware authentication enabled: <br><ul><li>`0` - Disable</li><li>`1` - Enable</li></ul>  | Disabled
+make USE_NFC=\<enable\>          | Build with NFC enabled:<br><ul><li>`0` - Disable</li><li>`1` - Enable</li></ul>                       | Disabled
