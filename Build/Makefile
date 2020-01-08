@@ -166,7 +166,7 @@ $(foreach protocol,$(PROTOCOLS),$(foreach app,$(APPS_LIST),$(foreach crypto,$(CR
 # Build AccessorySetupGenerator Tool
 ACCESSORY_SETUP_GENERATOR:= Tools/AccessorySetupGenerator
 $(call build_module,$(ACCESSORY_SETUP_GENERATOR),$(call all_sources_in,$(ACCESSORY_SETUP_GENERATOR)))
-$(foreach crypto,$(CRYPTO_MODULES),$(call build_executable,$(ACCESSORY_SETUP_GENERATOR),$(crypto),,$(ACCESSORY_SETUP_GENERATOR) $(CORE) Mock $(crypto)))
+$(foreach crypto,$(CRYPTO_MODULES),$(call build_executable,$(ACCESSORY_SETUP_GENERATOR),$(crypto),,$(ACCESSORY_SETUP_GENERATOR) $(CORE) $(PAL) $(crypto)))
 
 info:
 	@echo "Compiler: $(COMPILER)"
