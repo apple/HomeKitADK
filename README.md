@@ -53,7 +53,7 @@ make CRYPTO=MbedTLS apps
 ## Linux
 #### Prerequisites
 ```sh
-brew cask install docker
+sudo apt install clang libavahi-compat-libdnssd-dev libsqlite3-dev libasound2-dev libopus-dev libfaac-dev
 ```
 
 Run docker (Look in Spotlight/Applications folder). This is a one time instruction.
