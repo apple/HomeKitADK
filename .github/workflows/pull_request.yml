@@ -1,0 +1,11 @@
+name: CI
+
+on: pull_request
+
+jobs:
+  linux-unit-test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+      with: 
+        script: ../../ci/run_linux_tests.sh
