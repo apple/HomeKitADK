@@ -6,6 +6,9 @@ jobs:
   linux-unit-test:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-      with: 
-        script: ../../ci/run_linux_tests.sh
+    - name: Checkout code
+      uses: actions/checkout@v1
+    - name: Run debug build
+      run: make TARGET=Linux all
+    - name: Run release build
+      run: make TARGET=Linux BUILD_TYPE=Release all

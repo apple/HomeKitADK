@@ -7,6 +7,8 @@ CWD := $(shell pwd)
 MAKE := make -f Build/Makefile -j 8
 DOCKER := docker
 DOCKERFILE := Build/Docker/Dockerfile
+
+MAKE_DOCKER = `$(DOCKER) build -f $(DOCKERFILE) . | tee /dev/stderr | grep "Successfully built" | cut -d ' ' -f 3`
 RUN := $(DOCKER) run \
   -e PROTOCOLS \
   -e USE_HW_AUTH \
@@ -15,11 +17,11 @@ RUN := $(DOCKER) run \
   --cap-add=SYS_PTRACE \
   --security-opt seccomp=unconfined \
   --mount type=bind,source="$(CWD)",target=/build \
-  -it `make docker`
+  -i $(MAKE_DOCKER)
 
 STEPS := all tests apps clean check info tools %.debug
 
-.PHONY: $(STEPS) %.debug shell docker
+.PHONY: $(STEPS) %.debug shell
 
 HOST := $(shell uname)
 TARGET ?= $(HOST)
@@ -29,7 +31,7 @@ ifeq ($(HOST)$(TARGET),LinuxDarwin)
 $(error Can't build $(TARGET) on $(HOST).)
 endif
 ifneq ($(TARGET),Darwin)
-	MAKE := $(if $(filter $(HOST),Darwin),$(RUN),) $(MAKE)
+	MAKE := $(RUN) $(MAKE)
 endif
 
 ifeq ($(TARGET),Raspi)
@@ -46,6 +48,3 @@ $(eval $(foreach step,$(STEPS),$(call make_target,$(step),$(MAKE) PAL=$(TARGET) 
 
 shell:
 	@$(RUN) bash
-
-docker:
-	@$(DOCKER) build -f $(DOCKERFILE) . | tee /dev/stderr | grep "Successfully built" | cut -d ' ' -f 3
