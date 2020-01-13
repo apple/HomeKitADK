@@ -29,7 +29,13 @@ ifeq ($(HOST)$(TARGET),LinuxDarwin)
 $(error Can't build $(TARGET) on $(HOST).)
 endif
 ifneq ($(TARGET),Darwin)
-	MAKE := $(if $(filter $(HOST),Darwin),$(RUN),) $(MAKE)
+	ifneq (,$(wildcard /.dockerenv))
+		# If we are already running inside docker
+		MAKE := $(MAKE)
+	else
+		# Else run make inside docker
+		MAKE := $(RUN) $(MAKE)
+	endif
 endif
 
 ifeq ($(TARGET),Raspi)
