@@ -1,3 +1,27 @@
+## Development Environment
+
+Development of HomeKit ADK is supported on the following platforms:
+### Darwin
+#### Prerequisites
+Download and install [Xcode 11](https://download.developer.apple.com/Developer_Tools/Xcode_11/Xcode_11.xip)
+
+```sh
+brew install openssl@1.1
+brew install mbedtls --HEAD
+brew install wget
+brew install qemu
+brew cask install docker
+```
+
+Run docker (Look in Spotlight/Applications folder). This is a one time instruction.
+Make sure you go to Docker→Preferences→General and check the option → Start Docker Desktop when you log in
+
+### Linux
+#### Prerequisites
+```sh
+sudo apt install docker
+```
+
 ## Code Style
 Please use the following tools to auto-format your code before submitting a Pull Request.
 
