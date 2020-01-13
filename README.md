@@ -9,18 +9,10 @@ The HomeKit Open Source ADK is an open-source version of the HomeKit Accessory D
 Go to the [Apple Developer Site](https://developer.apple.com/homekit/) if you like to learn more about developing HomeKit-enabled accessories and apps.
 
 ## Documentation
+* Please go through [Developing with ADK](./Documentation/developing_with_adk.md) before starting development with HomeKit ADK
 * [Platform Abstraction Layer](./Documentation/PAL.md)
 
-## Darwin
-
-#### Prerequisites
-Download and install [Xcode 11](https://download.developer.apple.com/Developer_Tools/Xcode_11/Xcode_11.xip)
-
-```sh
-brew install openssl@1.1
-brew install mbedtls --HEAD
-
-```
+## Darwin PAL
 
 #### Compile
 ```sh
@@ -32,20 +24,7 @@ make all
 ./Output/Darwin-x86_64-apple-darwin18.6.0/Debug/IP/Applications/Lightbulb.OpenSSL
 ```
 
-*NOTE:* We use the OpenSSL crypto backend by default on Darwin. You can select a different crypto module:
-
-```sh
-make CRYPTO=MbedTLS apps
-```
-
-## Linux
-#### Prerequisites
-```sh
-brew cask install docker
-```
-
-Run docker (Look in Spotlight/Applications folder). This is a one time instruction.
-Make sure you go to Docker→Preferences→General and check the option → Start Docker Desktop when you log in
+## Linux PAL
 
 #### Compile
 ```sh
@@ -54,14 +33,14 @@ make TARGET=Linux apps
 
 ## Raspberry Pi
 #### Prerequisites
+Run this to create the SD card image (Linux+patches) and a Docker container (your build environment).
+Make sure that Docker is running before running this setup or it will fail and you will have to start over!
+This will take about an hour and will stop for input many times. It will also require you to swap the card out twice.
 ```sh
-brew cask install docker
-brew install qemu
-brew install qrencode
-
 # Run the Docker app. It is required for docker import.
 ./Tools/raspi_sdcard_setup.sh
 ```
+
 #### Compile
 ```sh
 make TARGET=Raspi all
@@ -69,6 +48,8 @@ make TARGET=Raspi all
 If docker doesn't find "dev-test/raspiadk-base", run the sdcard setup and make sure to do the docker import at the end of the script.
 
 #### Install
+After building, run this to install the build products to your RaspPi. (`-n` is for the hostname of your RaspPi and `-p`
+is the SSH password; both of these were chosen during the initial `raspi_sdcard_setup.sh` install).
 ```sh
 ./Tools/install.sh \
     -d raspi \
