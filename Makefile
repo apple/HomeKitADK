@@ -8,11 +8,12 @@ MAKE := make -f Build/Makefile -j 8
 DOCKER := docker
 DOCKERFILE := Build/Docker/Dockerfile
 
+ENABLE_TTY =
 MAKE_DOCKER = $(DOCKER) build -f $(DOCKERFILE) . | tee /dev/stderr | grep "Successfully built" | cut -d ' ' -f 3
-RUN := $(DOCKER) run \
-  -e HOST \
+RUN = $(DOCKER) run \
   -e APPS \
   -e BUILD_TYPE \
+  -e HOST \
   -e LOG_LEVEL \
   -e PROTOCOLS \
   -e TARGET \
@@ -21,7 +22,7 @@ RUN := $(DOCKER) run \
   --cap-add=SYS_PTRACE \
   --security-opt seccomp=unconfined \
   --mount type=bind,source="$(CWD)",target=/build \
-  -it `$(MAKE_DOCKER)`
+  -i $(ENABLE_TTY) `$(MAKE_DOCKER)`
 
 STEPS := all tests apps clean check info tools %.debug
 
@@ -56,6 +57,7 @@ endef
 
 $(eval $(foreach step,$(STEPS),$(call make_target,$(step),$(MAKE) PAL=$(TARGET))))
 
+shell: ENABLE_TTY=-t
 shell:
 	@$(RUN) bash
 
