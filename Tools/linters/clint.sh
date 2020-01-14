@@ -56,10 +56,12 @@ if ! "$CLANG_FORMAT" --version | grep -q $CLANG_FORMAT_VERSION; then
     "Darwin")
       CLANG_BIN_FILE="clang+llvm-9.0.0-x86_64-darwin-apple"
       DEST="/usr/local/bin"
+      SUDO=
       ;;
     "Linux")
       CLANG_BIN_FILE="clang+llvm-9.0.0-x86_64-linux-gnu-ubuntu-18.04"
       DEST="/usr/bin"
+      SUDO="sudo"
       ;;
     *)
       echo "Unsupported system"
@@ -69,7 +71,7 @@ if ! "$CLANG_FORMAT" --version | grep -q $CLANG_FORMAT_VERSION; then
 
   download "$CLANG_BIN_FILE.tar.xz" http://releases.llvm.org/9.0.0/"$CLANG_BIN_FILE.tar.xz" \
     && tar --xz -xvf "$CLANG_BIN_FILE.tar.xz" \
-    && cp -f "$CLANG_BIN_FILE/bin/clang-format" "$DEST/clang-format" \
+    && "$SUDO" cp -f "$CLANG_BIN_FILE/bin/clang-format" "$DEST/clang-format" \
     && rm -rf "$CLANG_BIN_FILE" "$CLANG_BIN_FILE.tar.xz"
 fi
 

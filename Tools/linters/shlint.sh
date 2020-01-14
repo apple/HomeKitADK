@@ -16,10 +16,12 @@ if ! shellcheck --version | grep -q $SHELLCHECK_VERSION; then
     "Darwin")
       SHELLCHECK_BIN_FILE="shellcheck-stable.darwin.x86_64"
       DEST="/usr/local/bin"
+      SUDO=
       ;;
     "Linux")
       SHELLCHECK_BIN_FILE="shellcheck-stable.linux.x86_64"
       DEST="/usr/bin"
+      SUDO="sudo"
       ;;
     *)
       echo "Unsupported system"
@@ -30,7 +32,7 @@ if ! shellcheck --version | grep -q $SHELLCHECK_VERSION; then
   download shellcheck.tar.xz "https://shellcheck.storage.googleapis.com/$SHELLCHECK_BIN_FILE.tar.xz" \
     && tar -xvf "shellcheck.tar.xz" \
     && chmod 755 shellcheck-stable/shellcheck \
-    && cp -f shellcheck-stable/shellcheck "$DEST/shellcheck" \
+    && "$SUDO" cp -f shellcheck-stable/shellcheck "$DEST/shellcheck" \
     && rm -rf shellcheck*
 fi
 
