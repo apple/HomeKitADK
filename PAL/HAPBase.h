@@ -1462,19 +1462,19 @@ void HAPSHA1Checksum(uint8_t checksum[_Nonnull kHAPSHA1Checksum_NumBytes], const
 #define HAP_NONNULL_SUPPORT(type) \
     HAP_DIAGNOSTIC_PUSH \
     HAP_DIAGNOSTIC_IGNORED_CLANG("-Wunused-function") \
-    __attribute__((always_inline)) \
-            __attribute__((overloadable)) static type* _Nonnull HAPNonnull(/* NOLINT(bugprone-macro-parentheses) */ \
-                                                                           type* _Nullable const value) /* NOLINT(bugprone-macro-parentheses) \
-                                                                                                         */ \
+    __attribute__((always_inline)) __attribute__(( \
+            overloadable)) static type* _Nonnull HAPNonnull(/* NOLINT(bugprone-macro-parentheses) */ \
+                                                            type* _Nullable const value) /* NOLINT(bugprone-macro-parentheses) \
+                                                                                          */ \
     { \
         HAPAssert(value); \
         return value; \
     } \
 \
-    __attribute__((always_inline)) __attribute__( \
-            (overloadable)) static const type* _Nonnull HAPNonnull(/* NOLINT(bugprone-macro-parentheses) */ \
-                                                                   const type* _Nullable const value) /* NOLINT(bugprone-macro-parentheses) \
-                                                                                                       */ \
+    __attribute__((always_inline)) __attribute__(( \
+            overloadable)) static const type* _Nonnull HAPNonnull(/* NOLINT(bugprone-macro-parentheses) */ \
+                                                                  const type* _Nullable const value) /* NOLINT(bugprone-macro-parentheses) \
+                                                                                                      */ \
     { \
         HAPAssert(value); \
         return value; \
