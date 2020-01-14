@@ -1,0 +1,23 @@
+name: CI
+
+on: pull_request
+
+jobs:
+  linux-unit-test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v1
+    - name: Linux debug build
+      run: make TARGET=Linux all
+    - name: Linux release build
+      run: make TARGET=Linux BUILD_TYPE=Release all
+  linter:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v1
+    - name: Lint shell scripts
+      run: ./Tools/linters/shlint.sh
+    - name: Lint source code
+      run: ./Tools/linters/clint.sh
