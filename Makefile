@@ -9,6 +9,7 @@ DOCKER := docker
 DOCKERFILE := Build/Docker/Dockerfile
 RUN := $(DOCKER) run \
   -e APPS \
+  -e BUILD_TYPE \
   -e LOG_LEVEL \
   -e PROTOCOLS \
   -e TARGET \
@@ -50,7 +51,7 @@ define make_target
 
 endef
 
-$(eval $(foreach step,$(STEPS),$(call make_target,$(step),$(MAKE) PAL=$(TARGET) BUILD_TYPE=$(BUILD_TYPE))))
+$(eval $(foreach step,$(STEPS),$(call make_target,$(step),$(MAKE) PAL=$(TARGET))))
 
 shell:
 	@$(RUN) bash
