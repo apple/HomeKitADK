@@ -8,6 +8,7 @@ MAKE := make -f Build/Makefile -j 8
 DOCKER := docker
 DOCKERFILE := Build/Docker/Dockerfile
 RUN := $(DOCKER) run \
+  -e HOST \
   -e APPS \
   -e BUILD_TYPE \
   -e LOG_LEVEL \
