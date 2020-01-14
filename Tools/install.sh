@@ -14,7 +14,6 @@ usage()
   echo "-i  - [optional] install only, do not run the application (raspi only)"
   echo "-n  - [optional] raspberry pi host name"
   echo "-p  - [optional] raspberry pi password"
-  echo "-t  - [optional] Transport type.  Possible values are ip, ble"
   echo "-l  - [optional] Install path on device. Default: \"~\""
   exit 1
 }
@@ -24,9 +23,8 @@ APPLICATION=
 HOSTNAME=
 PASSWORD=
 INSTALL_ONLY=
-TRANSPORT="ble"
 INSTALL_PATH="~"
-while getopts "hd:a:n:p:it:l:" opt; do
+while getopts "hd:a:n:p:il:" opt; do
   case ${opt} in
     d ) DEVICE=$OPTARG
       ;;
@@ -37,8 +35,6 @@ while getopts "hd:a:n:p:it:l:" opt; do
     p ) PASSWORD=$OPTARG
       ;;
     i ) INSTALL_ONLY=1
-      ;;
-    t ) TRANSPORT=$OPTARG
       ;;
     l ) INSTALL_PATH=$OPTARG
       ;;
