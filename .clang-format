@@ -7,6 +7,9 @@ IndentPPDirectives: None
 IndentWidth: 4
 TabWidth: 4
 UseTab: Never
+TypenameMacros:
+  - HAP_ENUM_BEGIN
+  - HAP_ENUM_END
 
 AlignAfterOpenBracket: AlwaysBreak
 AlignConsecutiveMacros: true

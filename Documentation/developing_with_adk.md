@@ -1,4 +1,16 @@
 ## Code Style
+Please use the following tools to auto-format your code before submitting a Pull Request.
+
+## Linting source code
+This project uses `clang-format` tool to lint and format the code.
+```
+./Tools/linters/clint.sh -h
+```
+
+## Linting shell scripts
+```
+./Tools/linters/shlint.sh
+```
 
 ## Guidelines
 #### Sample Application
