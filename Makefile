@@ -2,11 +2,20 @@
 
 export
 
-CWD := $(shell pwd)
+STEPS := all tests apps clean check info tools %.debug
+.PHONY: $(STEPS) %.debug shell docker
 
+CWD := $(shell pwd)
+HOST := $(shell uname)
+TARGET ?= $(HOST)
+BUILD_TYPE ?= Debug
 MAKE := make -f Build/Makefile -j 8
 DOCKER := docker
+
 DOCKERFILE := Build/Docker/Dockerfile
+ifeq ($(TARGET),Raspi)
+	DOCKERFILE := Build/Docker/Dockerfile.Raspi
+endif
 
 ENABLE_TTY =
 MAKE_DOCKER = $(DOCKER) build -f $(DOCKERFILE) . | tee /dev/stderr | grep "Successfully built" | cut -d ' ' -f 3
@@ -22,15 +31,8 @@ RUN = $(DOCKER) run \
   --cap-add=SYS_PTRACE \
   --security-opt seccomp=unconfined \
   --mount type=bind,source="$(CWD)",target=/build \
+  --rm \
   -i $(ENABLE_TTY) `$(MAKE_DOCKER)`
-
-STEPS := all tests apps clean check info tools %.debug
-
-.PHONY: $(STEPS) %.debug shell docker
-
-HOST := $(shell uname)
-TARGET ?= $(HOST)
-BUILD_TYPE ?= Debug
 
 ifeq ($(HOST)$(TARGET),LinuxDarwin)
 $(error Can't build $(TARGET) on $(HOST).)
@@ -45,9 +47,6 @@ ifneq ($(TARGET),Darwin)
 	endif
 endif
 
-ifeq ($(TARGET),Raspi)
-	DOCKERFILE := Build/Docker/Dockerfile.Raspi
-endif
 
 define make_target
   $(1):
