@@ -15,11 +15,9 @@ RUN echo ========== Install dependencies ========== \
     libfaac-dev \
     libopus-dev \
     libsqlite3-dev \
-    libssl-dev
+    libssl-dev \
+  && rm -rf /var/lib/apt/lists/*
 
 RUN apt-get install -y gdb
-
-RUN echo ========== Cleanup ========== \
-  && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /build
