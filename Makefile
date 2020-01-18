@@ -18,7 +18,7 @@ ifeq ($(TARGET),Raspi)
 endif
 
 ENABLE_TTY =
-MAKE_DOCKER = $(DOCKER) build -f $(DOCKERFILE) . | tee /dev/stderr | grep "Successfully built" | cut -d ' ' -f 3
+MAKE_DOCKER = $(DOCKER) build - < $(DOCKERFILE) | tee /dev/stderr | grep "Successfully built" | cut -d ' ' -f 3
 RUN = $(DOCKER) run \
   -e APPS \
   -e BUILD_TYPE \
