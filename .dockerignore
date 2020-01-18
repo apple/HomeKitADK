@@ -1,0 +1,10 @@
+# Git related
+.git
+
+# Build generated
+Output/
+Services/
+
+# Temp directories
+tmp/
+**/.cache/
