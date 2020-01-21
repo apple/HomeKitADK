@@ -16,6 +16,7 @@ RUN echo ========== Install dependencies ========== \
     libopus-dev \
     libsqlite3-dev \
     libssl-dev \
+    openssh-server \
   && rm -rf /var/lib/apt/lists/*
 
 RUN apt-get install -y gdb
