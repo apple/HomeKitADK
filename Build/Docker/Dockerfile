@@ -7,7 +7,6 @@ RUN echo ========== Install dependencies ========== \
     git \
     make \
     perl \
-    python3-pip \
     unzip \
     wget \
     libasound2-dev \
