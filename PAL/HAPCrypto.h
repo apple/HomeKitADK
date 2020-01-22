@@ -223,8 +223,6 @@ int HAP_constant_time_is_zero(const void* x, size_t length);
 void HAP_constant_time_fill_zero(void* x, size_t length);
 void HAP_constant_time_copy(void* x, const void* y, size_t length);
 
-void HAP_rand(uint8_t* buffer, size_t n);
-
 #ifdef __cplusplus
 }
 #endif

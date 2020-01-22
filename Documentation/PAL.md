@@ -248,11 +248,3 @@ void HAP_aes_ctr_encrypt(HAP_aes_ctr_ctx *ctx, uint8_t* ct, const uint8_t* pt, s
 void HAP_aes_ctr_decrypt(HAP_aes_ctr_ctx *ctx, uint8_t* pt, const uint8_t* ct, size_t ct_len);
 void HAP_aes_ctr_done(HAP_aes_ctr_ctx *ctx);
 ```
-
-### Cryptographic random
-
-Cryptographically secure random data.
-
-```
-void HAP_rand(uint8_t *buffer, size_t n);
-```

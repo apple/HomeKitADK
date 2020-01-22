@@ -566,8 +566,3 @@ void HAP_aes_ctr_done(HAP_aes_ctr_ctx* ctx) {
     EVP_CIPHER_CTX_free(handle->ctx);
     handle->ctx = NULL;
 }
-
-void HAP_rand(uint8_t* buffer, size_t n) {
-    int ret = RAND_bytes(buffer, n);
-    HAPAssert(ret == 1);
-}
