@@ -5,8 +5,8 @@
 // See [CONTRIBUTORS.md] for the list of HomeKit ADK project authors.
 
 #include "HAPPlatform.h"
-#include "HAPCrypto.h"
+#include <stdlib.h>
 
 void HAPPlatformRandomNumberFill(void* bytes, size_t numBytes) {
-    HAP_rand(bytes, numBytes);
+    arc4random_buf(bytes, numBytes);
 }

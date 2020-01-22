@@ -6,6 +6,7 @@
 
 #include "HAP+Internal.h"
 #include "HAPCrypto.h"
+#include "HAPPlatform.h"
 
 #include <string.h>
 #include <stdlib.h>
@@ -56,7 +57,7 @@ static void sha512_final(mbedtls_sha512_context* ctx, uint8_t md[SHA512_BYTES]) 
 #define WITH_BLINDING(X) \
     do { \
         uint8_t seed[64]; \
-        HAP_rand(seed, sizeof seed); \
+        HAPPlatformRandomNumberFill(seed, sizeof seed); \
         EDP_BLINDING_CTX ctx; \
         ed25519_Blinding_Init(&ctx, seed, sizeof seed); \
         X; \
@@ -95,7 +96,7 @@ int HAP_ed25519_verify(
 #endif
 
 static int blinding_rng(void* context, uint8_t* buffer, size_t n) {
-    HAP_rand(buffer, n);
+    HAPPlatformRandomNumberFill(buffer, n);
     return 0;
 }
 
@@ -671,8 +672,4 @@ void HAP_aes_ctr_done(HAP_aes_ctr_ctx* ctx) {
     memset(ctr_ctx, 0, sizeof *ctr_ctx);
     free(ctr_ctx);
     handle->ctx = NULL;
-}
-
-void HAP_rand(uint8_t* buffer, size_t n) {
-    arc4random_buf(buffer, n);
 }
