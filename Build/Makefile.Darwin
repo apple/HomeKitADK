@@ -25,7 +25,7 @@ CFLAGS_m := -fobjc-arc -Wno-ignored-attributes -Wno-unguarded-availability-new -
 CFLAGS_Darwin := $(CFLAGS_$(TARGET_FLAVOR)) $(CFLAGS_BLE) $(CFLAGS_IP)
 CFLAGS_Darwin += -DDARWIN=1 -Werror=unused-function
 CFLAGS_Darwin += -Wno-expansion-to-defined -Wno-nullability-completeness -Wno-deprecated-declarations
-CFLAGS_Darwin += -I$(XCODE_SDK_PATH)/usr/include -F$(XCODE_SDK_PATH)/System/Library/Frameworks
+CFLAGS_Darwin += -isysroot $(XCODE_SDK_PATH)
 LDFLAGS_Darwin := $(addprefix -framework ,Foundation CoreBluetooth Network CoreGraphics ImageIO CoreServices)
 ifeq ($(BUILD_TYPE),Release)
     LDFLAGS_Darwin += -dead_strip
