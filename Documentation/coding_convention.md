@@ -3,15 +3,19 @@
 ## Code Style
 Please use the following tools to auto-format your code before submitting a Pull Request.
 
-## Linting source code
-This project uses `clang-format` tool to lint and format the code.
+### Linting
+This project uses `clang-format` tool to lint and format source code and uses `shellcheck` to lint
+shell files.
 ```
-./Tools/linters/clint.sh -h
+./Tools/linters/lint.sh -h
 ```
 
-## Linting shell scripts
+### Enforcing lint rules at commit time
+As a convenience, the following git pre-commit hook can be used to validate that commits are properly
+linted. The hook will check all staged files with the linter and fail the commit if the linter finds issues
+(but does not reformat or fix any issues).
 ```
-./Tools/linters/shlint.sh
+cp Tools/linters/git-hooks-pre-commit .git/hooks/pre-commit
 ```
 
 ## Conventions

@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# Redirect output to stderr.
+exec 1>&2
+
+REPO_ROOT=`git rev-parse --show-toplevel`
+
+echo "==> Running lint on changed files..."
+exec git diff-index --cached --name-only HEAD \
+  | xargs printf -- '-f\0%s\0' \
+  | xargs -0 -- ${REPO_ROOT}/Tools/linters/lint.sh -F
+echo

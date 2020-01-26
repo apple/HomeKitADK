@@ -3,7 +3,7 @@
 export
 
 STEPS := all tests apps clean check info tools docs %.debug
-.PHONY: $(STEPS) %.debug shell docker
+.PHONY: $(STEPS) %.debug shell docker lint lint-changed
 
 CWD := $(shell pwd)
 HOST := $(shell uname)
@@ -72,3 +72,13 @@ shell:
 
 docker:
 	@$(MAKE_DOCKER)
+
+# Lint (and correct) all files.
+lint:
+	@Tools/linters/lint.sh -c
+
+# Lint (and correct) all currently-changed files (according to git).
+lint-changed:
+	@git diff-index --name-only HEAD \
+	  | xargs printf -- '-f\0%s\0' \
+ 	  | xargs -0 -- Tools/linters/lint.sh -Q -c
