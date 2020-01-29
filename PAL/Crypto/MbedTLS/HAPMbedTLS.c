@@ -324,7 +324,21 @@ int HAP_srp_premaster_secret(
         const uint8_t priv_b[SRP_SECRET_KEY_BYTES],
         const uint8_t u[SRP_SCRAMBLING_PARAMETER_BYTES],
         const uint8_t v[SRP_VERIFIER_BYTES]) {
+    bool isAValid = false;
     BN_FROM_BYTES(A, pub_a, SRP_PUBLIC_KEY_BYTES, {
+        // Refer RFC 5054: https://tools.ietf.org/html/rfc5054
+        // Section 2.5.4
+        // Fail if A%N == 0
+        WITH_gN({
+            WITH_BN(rem, {
+                int ret = mbedtls_mpi_mod_mpi(&rem, &A, &N);
+                HAPAssert(ret == 0);
+                if (mbedtls_mpi_cmp_int(&rem, 0) != 0) {
+                    isAValid = true;
+                }
+            });
+        });
+
         BN_FROM_BYTES(b, priv_b, SRP_SECRET_KEY_BYTES, {
             BN_FROM_BYTES(u_, u, SRP_SCRAMBLING_PARAMETER_BYTES, {
                 BN_FROM_BYTES(v_, v, SRP_VERIFIER_BYTES, {
@@ -344,8 +358,7 @@ int HAP_srp_premaster_secret(
             });
         });
     });
-    // TODO: We are not checking for illegal A keys here (A*v^u == -1,0,1). Should we?
-    return 0;
+    return (isAValid) ? 0 : 1;
 }
 
 static size_t Count_Leading_Zeroes(const uint8_t* start, size_t n) {
