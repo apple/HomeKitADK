@@ -25,6 +25,7 @@ usage()
 
 SHELLCHECK=shellcheck
 SEARCH_PATH=$ADK_ROOT
+PARALLEL=8
 SHELL_FILES=()
 
 while getopts "hf:d:" opt; do
@@ -101,8 +102,9 @@ if [[ ${#SHELL_FILES[@]} -eq 0 ]]; then
 fi
 
 printf "%s\0" "${SHELL_FILES[@]}" \
-    | xargs -t -0 \
+    | xargs -t -0 -P ${PARALLEL} -I{} -- \
         $SHELLCHECK \
         --external-sources \
         --exclude=SC1091 \
-        --shell=bash
+        --shell=bash \
+        {}
