@@ -4,6 +4,7 @@ FROM ubuntu:18.04
 RUN echo ========== Install dependencies ========== \
   && apt-get update && apt-get install -y \
     clang \
+    gdb \
     git \
     make \
     perl \
@@ -17,7 +18,5 @@ RUN echo ========== Install dependencies ========== \
     libssl-dev \
     openssh-server \
   && rm -rf /var/lib/apt/lists/*
-
-RUN apt-get install -y gdb
 
 WORKDIR /build
