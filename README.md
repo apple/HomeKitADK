@@ -69,3 +69,4 @@ make PROTOCOLS=\<protocol\>      | Space delimited protocols supported by the ap
 make TARGET=\<platform\>         | Build for a given target platform:<br><ul><li>`Darwin`</li><li>`Linux`</li><li>`Raspi`</li></ul>    | Build for the host Platform
 make USE_HW_AUTH=\<enable\>      | Build with hardware authentication enabled: <br><ul><li>`0` - Disable</li><li>`1` - Enable</li></ul>  | Disabled
 make USE_NFC=\<enable\>          | Build with NFC enabled:<br><ul><li>`0` - Disable</li><li>`1` - Enable</li></ul>                       | Disabled
+make DOCKER=\<enable\>           | Build with or without Docker: <br><ul><li>`0` - Disable Docker during compilation</li><li>`1` - Enable Docker during compilaton</li></ul> | `1` - Docker is enabled
