@@ -7,10 +7,19 @@ STEPS := all tests apps clean check info tools %.debug
 
 CWD := $(shell pwd)
 HOST := $(shell uname)
+
+NPROC :=
+ifeq ($(HOST),Darwin)
+  NPROC = sysctl -n hw.physicalcpu
+else
+  NPROC = nproc
+endif
+
 TARGET ?= $(HOST)
 BUILD_TYPE ?= Debug
-MAKE := make -f Build/Makefile -j 8
-DOCKER := docker
+MAKE := make -f Build/Makefile -j $(shell $(NPROC))
+DOCKER_EXE := docker
+DOCKER ?= 1
 
 DOCKERFILE := Build/Docker/Dockerfile
 ifeq ($(TARGET),Raspi)
@@ -18,8 +27,8 @@ ifeq ($(TARGET),Raspi)
 endif
 
 ENABLE_TTY =
-MAKE_DOCKER = $(DOCKER) build - < $(DOCKERFILE) | tee /dev/stderr | grep "Successfully built" | cut -d ' ' -f 3
-RUN = $(DOCKER) run \
+MAKE_DOCKER = $(DOCKER_EXE) build - < $(DOCKERFILE) | tee /dev/stderr | grep "Successfully built" | cut -d ' ' -f 3
+RUN = $(DOCKER_EXE) run \
   -e APPS \
   -e BUILD_TYPE \
   -e HOST \
@@ -41,12 +50,13 @@ ifneq ($(TARGET),Darwin)
 	ifneq (,$(wildcard /.dockerenv))
 		# If we are already running inside docker
 		MAKE := $(MAKE)
+	else ifeq ($(DOCKER),0)
+		MAKE := $(MAKE)
 	else
 		# Else run make inside docker
 		MAKE := $(RUN) $(MAKE)
 	endif
 endif
-
 
 define make_target
   $(1):
