@@ -7,9 +7,17 @@ STEPS := all tests apps clean check info tools %.debug
 
 CWD := $(shell pwd)
 HOST := $(shell uname)
+
+NPROC :=
+ifeq ($(HOST),Darwin)
+  NPROC = sysctl -n hw.physicalcpu
+else
+  NPROC = nproc
+endif
+
 TARGET ?= $(HOST)
 BUILD_TYPE ?= Debug
-MAKE := make -f Build/Makefile -j 8
+MAKE := make -f Build/Makefile -j $(shell $(NPROC))
 DOCKER := docker
 
 DOCKERFILE := Build/Docker/Dockerfile
