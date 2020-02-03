@@ -235,7 +235,7 @@ static bool AccessoryIsValid(const HAPAccessory* accessory) {
                 return false;
             }
         }
-
+        // Test commit to trigger CI action
         if (service->linkedServices) {
             for (size_t j = 0; service->linkedServices[j]; j++) {
                 uint16_t linkedService = service->linkedServices[j];
