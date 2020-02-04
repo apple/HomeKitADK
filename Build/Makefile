@@ -9,7 +9,11 @@ PLATFORM := $(shell uname)
 PAL ?= $(PLATFORM)
 BUILD_TYPE ?= Debug
 
-DOXY_CONFIG ?= Documentation/Doxyfile
+DOXYGEN_EXE :=
+ifneq (,$(shell which doxygen))
+	DOXYGEN_EXE := doxygen Documentation/Doxyfile
+endif
+
 
 SRC_DIRS := HAP External/HTTP External/JSON External/Base64 PAL PAL/Mock
 CFLAGS := -Wall -Werror -DHAP_ENABLE_DEVELOPMENT_ONLY_CODE=1
@@ -192,7 +196,7 @@ clean:
 	rm -rf $(OUTPUT_DIR)
 
 doxygen:
-	doxygen $(DOXY_CONFIG)
+	$(DOXYGEN_EXE)
 
 check:
 	! grep -r "[[:blank:]]$$" HAP PAL External Tests Applications
