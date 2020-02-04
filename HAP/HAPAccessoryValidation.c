@@ -163,7 +163,7 @@ static bool AccessoryIsValid(const HAPAccessory* accessory) {
         HAPLogAccessoryError(
                 &logObject,
                 accessory,
-                "Accessory %s %s is not a valid UTF-8 string.",
+                "Accessory %s %s is not a valid UTF-8 string., // Test comment to trigger build
                 "serialNumber",
                 accessory->serialNumber);
         return false;
