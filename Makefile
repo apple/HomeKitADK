@@ -2,7 +2,7 @@
 
 export
 
-STEPS := all tests apps clean check info tools %.debug
+STEPS := all tests apps clean doxygen check info tools %.debug
 .PHONY: $(STEPS) %.debug shell docker
 
 CWD := $(shell pwd)

@@ -9,6 +9,8 @@ PLATFORM := $(shell uname)
 PAL ?= $(PLATFORM)
 BUILD_TYPE ?= Debug
 
+DOXY_CONFIG ?= Documentation/Doxyfile
+
 SRC_DIRS := HAP External/HTTP External/JSON External/Base64 PAL PAL/Mock
 CFLAGS := -Wall -Werror -DHAP_ENABLE_DEVELOPMENT_ONLY_CODE=1
 LDFLAGS :=
@@ -188,6 +190,9 @@ endif
 
 clean:
 	rm -rf $(OUTPUT_DIR)
+
+doxygen:
+	doxygen $(DOXY_CONFIG)
 
 check:
 	! grep -r "[[:blank:]]$$" HAP PAL External Tests Applications
