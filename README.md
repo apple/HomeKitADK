@@ -1,4 +1,4 @@
-# HomeKit Accessory Development Kit (ADK)
+# HomeKit Accessory Development Kit (ADK) ![C/C++ CI](https://github.com/terafin/HomeKitADK/workflows/C/C++%20CI/badge.svg)
 
 The HomeKit ADK is used by silicon vendors and accessory manufacturers to build HomeKit compatible devices.
 
