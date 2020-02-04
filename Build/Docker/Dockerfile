@@ -13,6 +13,8 @@ RUN echo ========== Install dependencies ========== \
     perl \
     unzip \
     wget \
+    doxygen \
+    graphviz \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
 
