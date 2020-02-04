@@ -16,3 +16,7 @@ Output/
 
 # Open source export
 export/
+
+# Backup files
+*.bak
+
