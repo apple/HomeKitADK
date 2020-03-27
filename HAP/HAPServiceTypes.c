@@ -83,3 +83,5 @@ const HAPUUID kHAPServiceType_IrrigationSystem = HAPUUIDCreateAppleDefined(0xCF)
 const HAPUUID kHAPServiceType_Valve = HAPUUIDCreateAppleDefined(0xD0);
 
 const HAPUUID kHAPServiceType_Faucet = HAPUUIDCreateAppleDefined(0xD7);
+
+const HAPUUID kHAPServiceType_Doorbell = HAPUUIDCreateAppleDefined(0x121);

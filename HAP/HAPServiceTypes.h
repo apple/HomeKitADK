@@ -1096,6 +1096,30 @@ extern const HAPUUID kHAPServiceType_Valve;
 extern const HAPUUID kHAPServiceType_Faucet;
 /**@}*/
 
+/**
+ * Doorbell.
+ *
+ * This service describes describes a doorbell and is the primary service of the Video Doorbell Profile.
+ *
+ * This service requires iOS 10 or later.
+ *
+ * Required Characteristics:
+ * - Programmable Switch Event
+ *
+ * Optional Characteristics:
+ * - Name
+ * - Volume
+ * - Brightness
+ *
+ * @see HomeKit Accessory Protocol Specification R14
+ *      Section 8.12 Doorbell
+ */
+/**@{*/
+#define kHAPServiceDebugDescription_Doorbell "doorbell"
+
+extern const HAPUUID kHAPServiceType_Doorbell;
+/**@}*/
+
 #if __has_feature(nullability)
 #pragma clang assume_nonnull end
 #endif
