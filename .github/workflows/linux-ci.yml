@@ -1,0 +1,17 @@
+name: Linux CI
+
+on: pull_request
+
+jobs:
+  linux-unit-test:
+    runs-on: ubuntu-18.04
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v1
+
+      - name: Linux debug build
+        run: make TARGET=Linux all
+        
+      - name: Linux release build
+        run: make TARGET=Linux BUILD_TYPE=Release all
