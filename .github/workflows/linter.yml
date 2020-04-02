@@ -1,0 +1,16 @@
+name: Lint code
+
+on: pull_request
+
+jobs:
+  linter:
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v1
+
+      - name: Lint shell scripts
+        run: ./Tools/linters/shlint.sh
+        
+      - name: Lint source code
+        run: ./Tools/linters/clint.sh

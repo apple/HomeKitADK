@@ -1,0 +1,29 @@
+name: Linux CI (No Docker)
+
+on: pull_request
+
+jobs:
+  docker-unit-test:
+    runs-on: ubuntu-18.04
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v1
+
+      - name: Installing dependencies
+        # These were taken from Build/Docker/Dockerfile
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            clang \
+            libavahi-compat-libdnssd-dev \
+            libssl-dev \
+            make
+          sudo apt-get clean
+          sudo rm -rf /var/lib/apt/lists/*
+
+      - name: Linux debug build
+        run: make TARGET=Linux DOCKER=0 all
+        
+      - name: Linux release build
+        run: make TARGET=Linux DOCKER=0 BUILD_TYPE=Release all
