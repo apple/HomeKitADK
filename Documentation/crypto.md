@@ -1,16 +1,4 @@
-# HomeKit ADK Platform Abstraction Layer (PAL)
-
-This document describes the ADK PAL and how to port the ADK to a new platform.
-
-## Supported platforms
-
-The ADK ships with existing implementations for the following platforms and cryptographic libraries:
-
-Operating systems and runtime environments
-* Darwin (macOS)
-* Linux
-
-Cryptographic libraries
+# Supported Cryptographic Libraries
 * OpenSSL (1.1.1c or later)
 * MbedTLS (2.18.0 or later)
 

@@ -2,7 +2,7 @@
 
 export
 
-STEPS := all tests apps clean check info tools %.debug
+STEPS := all tests apps clean check info tools docs %.debug
 .PHONY: $(STEPS) %.debug shell docker
 
 CWD := $(shell pwd)

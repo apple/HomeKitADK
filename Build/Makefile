@@ -194,3 +194,6 @@ check:
 
 %.debug:
 	$(DEBUGGER) $(basename $@)
+
+docs:
+	Tools/generate_api_doc.sh
