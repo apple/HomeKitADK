@@ -31,11 +31,6 @@ typedef struct {
 
         /** Whether or not Software Authentication is supported. */
         bool supportsMFiTokenAuth : 1;
-#if (HAP_MFI_SW_AUTH == 1)
-
-        /** Whether or not Software Certificate Authentication is supported. */
-        bool supportsMFiSWAuth : 1;
-#endif
     } pairingFeatureFlags;
 
     /** Device ID. */
