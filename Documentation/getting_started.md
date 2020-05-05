@@ -76,7 +76,7 @@ make CRYPTO=? | Supported cryptographic libraries: <br><ul><li>OpenSSL (Default)
 make DOCKER=? | Build with or without Docker: <br><ul><li>1 - Enable Docker during compilation (Default)</li><li>0 - Disable Docker during compilation</li></ul>
 make LOG_LEVEL=level | <ul><li>0 - No logs are displayed (Default for release build)</li><li>1	- Error and Fault-level logs are displayed (Default for test build)</li><li>2 - Error, Fault-level and Info logs are displayed</li><li>3 - Error, Fault-level, Info and Debug logs are displayed (Default for debug build)</li></ul>
 make PROTOCOLS=? | Space delimited protocols supported by the applications: <br><ul><li>BLE</li><li>IP</li></ul><br>Example: `make PROTOCOLS=“IP BLE”`<br><br>Default: All protocols
-make TARGET=? | Build for a given target platform:<br><ul><li>Darwin</li><li>Linux</li><li>nRF52</li></li><li>Raspi</li></ul>
+make TARGET=? | Build for a given target platform:<br><ul><li>Darwin</li><li>Linux</li></li><li>Raspi</li></ul>
 make USE_DISPLAY=? | Build with display support enabled:<br><ul><li>0 - Disable (Default)</li><li>1 - Enable</li></ul>
 make USE_HW_AUTH=? | Build with hardware authentication enabled: <br><ul><li>0 - Disable (Default)</li><li>1 - Enable</li></ul>
 make USE_NFC=? | Build with NFC enabled:<br><ul><li>0 - Disable (Default)</li><li>1 - Enable</li></ul>
