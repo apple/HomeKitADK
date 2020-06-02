@@ -61,7 +61,7 @@ if ! $SHELLCHECK --version | grep -q $SHELLCHECK_VERSION; then
               ;;
     esac
 
-    download shellcheck.tar.xz "https://shellcheck.storage.googleapis.com/$SHELLCHECK_BIN_FILE.tar.xz" \
+    download shellcheck.tar.xz "https://github.com/koalaman/shellcheck/releases/download/stable/$SHELLCHECK_BIN_FILE.tar.xz" \
         && tar -xvf "shellcheck.tar.xz" \
         && chmod 755 shellcheck-stable/shellcheck \
         && "$SUDO" cp -f shellcheck-stable/shellcheck "$DEST/$SHELLCHECK" \
