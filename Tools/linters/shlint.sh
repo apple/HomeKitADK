@@ -46,25 +46,26 @@ if ! $SHELLCHECK --version | grep -q $SHELLCHECK_VERSION; then
     DEST=
     case "$(uname)" in
         "Darwin")
-              SHELLCHECK_BIN_FILE="shellcheck-stable.darwin.x86_64"
-              DEST="/usr/local/bin"
-              SUDO=
-              ;;
+            SHELLCHECK_BIN_FILE="shellcheck-v$SHELLCHECK_VERSION.darwin.x86_64"
+            DEST="/usr/local/bin"
+            SUDO=
+            ;;
         "Linux")
-              SHELLCHECK_BIN_FILE="shellcheck-stable.linux.x86_64"
-              DEST="/usr/bin"
-              SUDO="sudo"
-              ;;
+            SHELLCHECK_BIN_FILE="shellcheck-v$SHELLCHECK_VERSION.linux.x86_64"
+            DEST="/usr/bin"
+            SUDO="sudo"
+            ;;
         *)
-              echo "Unsupported system"
-              exit 1
-              ;;
+            echo "Unsupported system"
+            exit 1
+            ;;
     esac
 
-    download shellcheck.tar.xz "https://github.com/koalaman/shellcheck/releases/download/stable/$SHELLCHECK_BIN_FILE.tar.xz" \
+    download shellcheck.tar.xz \
+          "https://github.com/koalaman/shellcheck/releases/download/v$SHELLCHECK_VERSION/$SHELLCHECK_BIN_FILE.tar.xz" \
         && tar -xvf "shellcheck.tar.xz" \
-        && chmod 755 shellcheck-stable/shellcheck \
-        && "$SUDO" cp -f shellcheck-stable/shellcheck "$DEST/$SHELLCHECK" \
+        && chmod 755 "shellcheck-v$SHELLCHECK_VERSION/shellcheck" \
+        && "$SUDO" cp -f "shellcheck-v$SHELLCHECK_VERSION/shellcheck" "$DEST/$SHELLCHECK" \
         && rm -rf shellcheck*
 fi
 
