@@ -13,8 +13,11 @@ Go to the [Apple Developer Site](https://developer.apple.com/homekit/) if you li
 Please go through [Getting Started Guide](./Documentation/getting_started.md#prerequisites) before using HomeKit ADK.
 
 ### Documentation
-Run the following command to generate documentation for HomeKit ADK.
+ADK documentation is available as markdown files in [Documentation](./Documentation/) directory. However, a more user friendly
+`HTML` documentation can be generated from the markdown files by running the following command:
+
 ```sh
 make docs
 ```
-Click on [API documentation](./Documentation/api_docs/html/index.html) to view the generated documentation.
+
+The command above will prompt to open the generated HTML webpage. After the command has finished, the webpage `./Documentation/api_docs/html/index.html` can also be opened in a browser.
