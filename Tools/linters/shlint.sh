@@ -28,80 +28,81 @@ SEARCH_PATH=$ADK_ROOT
 SHELL_FILES=()
 
 while getopts "hf:d:" opt; do
-  case ${opt} in
-    f ) SHELL_FILES+=( "$OPTARG" );;
-    d ) SEARCH_PATH="$OPTARG";;
-    h ) usage;;
-    \? ) usage;;
-  esac
+    case ${opt} in
+        f ) SHELL_FILES+=( "$OPTARG" );;
+        d ) SEARCH_PATH="$OPTARG";;
+        h ) usage;;
+        \? ) usage;;
+    esac
 done
 
 # Install
 SHELLCHECK_VERSION="0.7.0"
 if ! $SHELLCHECK --version | grep -q $SHELLCHECK_VERSION; then
-  echo "Shellcheck version incorrect. Installing..."
+    echo "Shellcheck version incorrect. Installing..."
 
-  SHELLCHECK_BIN_FILE=
-  DEST=
-  case "$(uname)" in
-    "Darwin")
-      SHELLCHECK_BIN_FILE="shellcheck-stable.darwin.x86_64"
-      DEST="/usr/local/bin"
-      SUDO=
-      ;;
-    "Linux")
-      SHELLCHECK_BIN_FILE="shellcheck-stable.linux.x86_64"
-      DEST="/usr/bin"
-      SUDO="sudo"
-      ;;
-    *)
-      echo "Unsupported system"
-      exit 1
-      ;;
-  esac
+    SHELLCHECK_BIN_FILE=
+    DEST=
+    case "$(uname)" in
+        "Darwin")
+              SHELLCHECK_BIN_FILE="shellcheck-stable.darwin.x86_64"
+              DEST="/usr/local/bin"
+              SUDO=
+              ;;
+        "Linux")
+              SHELLCHECK_BIN_FILE="shellcheck-stable.linux.x86_64"
+              DEST="/usr/bin"
+              SUDO="sudo"
+              ;;
+        *)
+              echo "Unsupported system"
+              exit 1
+              ;;
+    esac
 
-  download shellcheck.tar.xz "https://shellcheck.storage.googleapis.com/$SHELLCHECK_BIN_FILE.tar.xz" \
-    && tar -xvf "shellcheck.tar.xz" \
-    && chmod 755 shellcheck-stable/shellcheck \
-    && "$SUDO" cp -f shellcheck-stable/shellcheck "$DEST/$SHELLCHECK" \
-    && rm -rf shellcheck*
+    download shellcheck.tar.xz "https://shellcheck.storage.googleapis.com/$SHELLCHECK_BIN_FILE.tar.xz" \
+        && tar -xvf "shellcheck.tar.xz" \
+        && chmod 755 shellcheck-stable/shellcheck \
+        && "$SUDO" cp -f shellcheck-stable/shellcheck "$DEST/$SHELLCHECK" \
+        && rm -rf shellcheck*
 fi
 
 if [ ${#SHELL_FILES[@]} -gt 0 ]; then
-  for file in "${SHELL_FILES[@]}"; do
-    if [[ ! -f "$file" ]]; then
-      echo "Skipping invalid file '$file' (does not exist)"
-      continue
-    fi
-  done
+    for file in "${SHELL_FILES[@]}"; do
+        if [[ ! -f "$file" ]]; then
+            echo "Skipping invalid file '$file' (does not exist)"
+            continue
+        fi
+    done
 else
-  echo "Looking for files in $SEARCH_PATH directory..."
-  while IFS=  read -r -d $'\0'; do
-    SHELL_FILES+=("$REPLY")
-  done < <(find "$SEARCH_PATH" -type f \
-    \( \
-      -perm -u=x \
-      -o -perm -g=x \
-      -o -perm -o=x \
-    \) \
-    -not -path "*\.tmp*" \
-    -exec bash -c 'grep -r "^#!.*\/bin\/bash" $1 1> /dev/null' _ {} \; \
-    -print0 \
-    -o -name "*.sh" \
-    -not -path "*\.tmp*" \
-    -print0
-  )
+    echo "Looking for files in $SEARCH_PATH directory..."
+    while IFS=  read -r -d $'\0'; do
+        SHELL_FILES+=("$REPLY")
+    done < <(find "$SEARCH_PATH" -type f \
+        \( \
+            -perm -u=x \
+            -o -perm -g=x \
+            -o -perm -o=x \
+        \) \
+        -not -path "*\.tmp*" \
+        -not -path "*External*" \
+        -exec bash -c 'grep -r "^#!.*\/bin\/bash" $1 1> /dev/null' _ {} \; \
+        -print0 \
+        -o -name "*.sh" \
+        -not -path "*\.tmp*" \
+        -print0
+    )
 fi
 
 # Exit early if no files are going to be checked.
 if [[ ${#SHELL_FILES[@]} -eq 0 ]]; then
-  echo "No files to lint!"
-  usage
+    echo "No files to lint!"
+    usage
 fi
 
 printf "%s\0" "${SHELL_FILES[@]}" \
-  | xargs -t -0 \
-      $SHELLCHECK \
-      --external-sources \
-      --exclude=SC1091 \
-      --shell=bash
+    | xargs -t -0 \
+        $SHELLCHECK \
+        --external-sources \
+        --exclude=SC1091 \
+        --shell=bash
