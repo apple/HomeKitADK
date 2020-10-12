@@ -63,7 +63,7 @@ is the SSH password; both of these were chosen during the initial `raspi_sdcard_
     -d raspi \
     -a Output/Raspi-armv6k-unknown-linux-gnueabihf/Debug/IP/Applications/Lightbulb.OpenSSL \
     -n raspberrypi \
-    -p pi
+    -p raspberry
 ```
 
 ## Make options
