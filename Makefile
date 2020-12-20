@@ -18,7 +18,7 @@ endif
 TARGET ?= $(HOST)
 BUILD_TYPE ?= Debug
 MAKE := make -f Build/Makefile -j $(shell $(NPROC))
-DOCKER_EXE := docker
+DOCKER_EXE := DOCKER_BUILDKIT=0 docker
 DOCKER ?= 1
 
 DOCKERFILE := Build/Docker/Dockerfile
