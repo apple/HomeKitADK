@@ -3392,6 +3392,9 @@ HAP_ENUM_BEGIN(uint8_t, HAPAccessoryCategory) {
      */
     kHAPAccessoryCategory_RangeExtenders = 16,
 
+    /** IP Cameras. */
+    kHAPAccessoryCategory_IPCameras = 17,
+
     /** Air Purifiers. */
     kHAPAccessoryCategory_AirPurifiers = 19,
 
