@@ -1096,6 +1096,25 @@ extern const HAPUUID kHAPServiceType_Valve;
 extern const HAPUUID kHAPServiceType_Faucet;
 /**@}*/
 
+/**@{*/
+#define kHAPServiceDebugDescription_CameraRTPStreamManagement "camera-rtp-stream-management"
+
+extern const HAPUUID kHAPServiceType_CameraRTPStreamManagement;
+/**@}*/
+
+/**@{*/
+#define kHAPServiceDebugDescription_Microphone "microphone"
+
+extern const HAPUUID kHAPServiceType_Microphone;
+/**@}*/
+
+/**@{*/
+#define kHAPServiceDebugDescription_Speaker "speaker"
+
+extern const HAPUUID kHAPServiceType_Speaker;
+/**@}*/
+
+
 #if __has_feature(nullability)
 #pragma clang assume_nonnull end
 #endif

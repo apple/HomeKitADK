@@ -343,6 +343,7 @@ static void EnumerateHAPTXTRecordsCallback(
             case kHAPAccessoryCategory_WindowCoverings:
             case kHAPAccessoryCategory_ProgrammableSwitches:
             case kHAPAccessoryCategory_RangeExtenders:
+            case kHAPAccessoryCategory_IPCameras:
             case kHAPAccessoryCategory_AirPurifiers:
             case kHAPAccessoryCategory_Heaters:
             case kHAPAccessoryCategory_AirConditioners:
@@ -725,6 +726,7 @@ HAPError HAPDiscoverBLEAccessoryServer(
                     case kHAPAccessoryCategory_WindowCoverings:
                     case kHAPAccessoryCategory_ProgrammableSwitches:
                     case kHAPAccessoryCategory_RangeExtenders:
+                    case kHAPAccessoryCategory_IPCameras:
                     case kHAPAccessoryCategory_AirPurifiers:
                     case kHAPAccessoryCategory_Heaters:
                     case kHAPAccessoryCategory_AirConditioners:
