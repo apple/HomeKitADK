@@ -2963,6 +2963,349 @@ extern const HAPUUID kHAPCharacteristicType_ActiveIdentifier;
 /**@}*/
 
 /**
+ * Streaming Status.
+ *
+ * A Streaming Status characteristic allows an IP Camera accessory to describe the status of RTP Stream Management service.
+ *
+ * This characteristic requires iOS 10 or later.
+ * 
+ * - Format: TLV
+ * - Permissions: Paired Read, Notify
+ *
+ * Status of the stream RTP management service
+ * - 0 - Available
+ * - 1 - In Use
+ * - 2 - Unavailable
+ * - 3 - 255 - Reserved for use by Apple
+ * 
+ * @see HomeKit Accessory Protocol Specification R14
+ *      Section 9.101 Streaming Status
+ */
+/**@{*/
+#define kHAPCharacteristicDebugDescription_StreamingStatus "streaming-status"
+
+extern const HAPUUID kHAPCharacteristicType_StreamingStatus;
+
+HAP_ENUM_BEGIN(uint8_t, HAPCharacteristicValue_StreamingStatus) { /** Available. */
+                                                               kHAPCharacteristicValue_StreamingStatus_Available = 0,
+
+                                                               /** In Use. */
+                                                               kHAPCharacteristicValue_StreamingStatus_InUse = 1,
+
+															   /** Unavailable. */
+															   kHAPCharacteristicValue_StreamingStatus_Unavailable = 2,
+} HAP_ENUM_END(uint8_t, HAPCharacteristicValue_StreamingStatus);
+/**@}*/
+
+/**
+ * Supported Audio Stream.
+ *
+ * A Supported Audio Stream Configuration characteristic allows an accessory to indicate the paramaters supported
+ * for streaming audio (from a microphone and/or to a speaker) over an RTP session.
+ * 
+ * This characteristic requires iOS 10 or later.
+ * 
+ * - Format: TLV
+ * - Permissions: Paired Read
+ *
+ * Supported Audio Stream Configuration - list of types
+ * Name | Type | Length | Description
+ * - Audio Codec Configuration | 1 | N | Codec information and the configurations supported for the codec
+ * - Comfort Noise support | 2 | 1 | Boolean, indicating support for Comfort Noise Codec
+ *
+ * An IP camera supporting multiple audio codecs must include one instance of the above TLV per supported audio codec.
+ * The Audio Codec Configuration is encoded as a TLV8. The list of types for this TLV are as follows:
+ * Name | Type | Length | Description
+ * - Codec type | 1 | 2 | Type of codec: 2 - AAC-ELD, 3 - Opus, 5 - AMR, 6 - AMR-WB, 7-255 - Reserved for use by Apple
+ * - Audio Codec Parameters | 2 | N | Codec-specific parameters
+ * 
+ * The Audio Codec parameters are encoded as a tlv8 - the list of types are as follows:
+ * 
+ * Name | Type | Length | Description
+ * Audio channels | 1 | 1 | Number of audio channels. Default is 1
+ * Bit-rate | 2 | 1 | 0 - Variable bit-rate, 1- Constant bit-rate
+ * Sample rate | 3 | 1 |  0 - 8KHz, 1 - 16 KHz, 2 - 24 KHz, 3 - Reserved for use by Apple
+ * RTP time | 4 | 1 | Packet Time - Length of time represented by the media in a packet RFC 4566. 
+ *                    Supported values - 20ms, 30ms, 40 ms & 60ms
+ *                    Note: This TLV will only be presented in the Selected Audio Codec Parameters TLV
+ *
+ * @see HomeKit Accessory Protocol Specification R14
+ *      Section 9.102 Supported Audio Stream Configuration
+ */
+/**@{*/
+#define kHAPCharacteristicDebugDescription_SupportedAudioStreamConfiguration "supported-audio-configuration"
+
+extern const HAPUUID kHAPCharacteristicType_SupportedAudioStreamConfiguration;
+/**@}*/
+
+/**
+ * Supported Data Stream Transport Configuration.
+ * This characteristics describes the data stream transport supported by the accessory. 
+ * This characteristic requires iOS 12 or later.
+ * 
+ * - Format: TLV
+ * - Permissions: Paired Read
+ * 
+ * The value of this characteristic is a TLV8-encoded list of supported parameters.
+ * 
+ * Type | Name | Format | Description
+ * 1 | Transfer Transport Configuration | N | The configuration supported for the transport.
+                                            | There is one TLV of this type per supported transport type.
+ * 
+ * The list of types for this TLV are as follows:
+ * 
+ * Type | Name | Format | Description
+ * 1 | Transport Type | 1 | Type of transport:
+ *                        | 0 - HomeKit Data Stream over TCP 
+ *                        | 1 - 255 Reserved for use by Apple
+ *
+ * @see HomeKit Accessory Protocol Specification R14
+ *      Section 9.103 Supported Audio Stream Configuration
+ */
+/**@{*/
+#define kHAPCharacteristicDebugDescription_SupportedDataStreamTransportConfiguration "supported-data-stream-transport-configuration"
+
+extern const HAPUUID kHAPCharacteristicType_SupportedDataStreamTransportConfiguration;
+/**@}*/
+
+/**
+ * Supported RTP Configuration.
+ *TODO - Update this from docs
+ * A Supported Audio Stream Configuration characteristic allows an accessory to indicate the paramaters supported
+ * for streaming audio (from a microphone and/or to a speaker) over an RTP session.
+ * - Format: TLV
+ * - Permissions: Paired Read
+ *
+ * Supported Audio Stream Configuration - list of types
+ * - Name|Type|Length|Description
+ * - SRTP Crypto Suite | 2 | 1 | 0 - AES_CM_128_HMAC_SHA1_80, 1 - AES_256_CM_HMAC_SHA1_80, 2 - Disabled, 3-255 reserved
+ * If multiple crypto suites are supported, multiple instances of this TLV should be present, Use delimiter 0x00 to seperate TLV items.
+ *
+ * @see HomeKit Accessory Protocol Specification R14
+ *      Section 9.104 Supported RTP Configuration
+ */
+/**@{*/
+#define kHAPCharacteristicDebugDescription_SupportedRTPConfiguration "supported-rtp-configuration"
+
+extern const HAPUUID kHAPCharacteristicType_SupportedRTPConfiguration;
+
+HAP_ENUM_BEGIN(uint8_t, HAPCharacteristicValue_SupportedRTPConfiguration) { /** AES_CM_128_HMAC_SHA1_80. */
+                                                               kHAPCharacteristicValue_SupportedRTPConfiguration_AES_CM_128_HMAC_SHA1_80 = 0,
+
+                                                               /** AES_256_CM_HMAC_SHA1_80. */
+                                                               kHAPCharacteristicValue_SupportedRTPConfiguration_AES_256_CM_HMAC_SHA1_80 = 1,
+
+															   /** Disabled. */
+															   kHAPCharacteristicValue_SupportedRTPConfiguration_Disabled = 2,
+} HAP_ENUM_END(uint8_t, HAPCharacteristicValue_SupportedRTPConfiguration);
+/**@}*/
+
+/**
+ * Supported Video Stream Configuration.
+ *
+ * A Supported Video Stream Configuration characteristic allows an IP Camera accessory to indicate the paramaters supported
+ * for streaming video over an RTP session. Status characteristics allow and IP camera accessory to describe the status of
+ * the RTP Stream Management service
+ * 
+ * This characteristic requires iOS 10 or later.
+ *
+ * - Format: TLV
+ * - Permissions: Paired Read
+ *
+ * Supported Video Stream Configuration - list of types
+ * Name|Type|Length|Description
+ * Video Codec Configuration | 1 | N | Codec information and the configurations supported for the codec
+ *                                     one per supported codec
+ *
+ * An IP camera supporting multiple video codecs must include one instance of the above TLV per supported video codec.
+ * The Video Codec Configuration is encoded as a TLV8. The list of types for this TLV are as follows:
+ * 
+ * Name | Type | Length | Description
+ * Video Codec type | 1 | N | Type of codec: 0 - H.264, 1-255 - Reserved for use by Apple
+ * Video Codec Parameters | 2 | N | Video Codec-specific parameters
+ * Video Attributes | 3 | N | Video attributes supported for the codec
+ *
+ * The Video Codec parameters TLV is encoded as a TLV8; the list of types for the value for a H.264 codec are as follows:
+ * 
+ * Name | Type | Length | Description
+ * ProfileID | 1 | 1 | Type of H.264 Profile: 0 - Constrained Baseline, 1 - Main*, 2 - High*, 3-255 Vendor-specific
+ * Level | 2 | 1 | Profile support level: 0 - 3.1, 1 - 3.2, 2 - 4, 3-255 Reserved for use by Apple
+ * Packetization mode | 3 | 1 | 0 - Non-interleaved mode, 1-255 Reserved for use by Apple
+ * CVO Enabled | 4 | 1 | 0 - CVO not supported, 1 - CVO supported
+ * CVO ID | 5 | 1 | ID for CVO RTP extension. This must be a value in the range [1-14]
+ *
+ * The Video attributes allow the accessory to indicate supported resolutions, frame rates, etc.
+ * 
+ * Name | Type | Length | Description
+ * Image Width | 1 | 2 | Image width in pixels
+ * Image Height | 2 | 2 | Image height in pixels
+ * Frame Rate | 3 | 1 | Maximum frame rate
+ * 
+ * An IP camera accessory supporting encoding video at different resolutions must include multiple instances of Video attributes TLV.
+ *
+ * @see HomeKit Accessory Protocol Specification R14
+ *      Section 9.105 Supported Video Stream Configuration
+ */
+/**@{*/
+#define kHAPCharacteristicDebugDescription_SupportedVideoStreamConfiguration "supported-video-stream-configuration"
+
+extern const HAPUUID kHAPCharacteristicType_SupportedVideoStreamConfiguration;
+/**@}*/
+
+/**
+ * Selected RTP Stream Configuration.
+ * 
+ * The Selected RTP Stream Configuration characteristic is a control point characteristic that allows a controller 
+ * to specify the selected video and audio attributes to be used for streaming audio and video from an IP camera accessory.
+ * 
+ * This characteristic requires iOS 10 or later.
+ * 
+ * - Format: TLV8
+ * - Permissions: Paired Read, Paired Write
+ *
+ * Selected RTP Stream Configuration - list of types
+ * Name | Type | Length | Description
+ * Session Control | 1 | 16 | Session Control Command and identifier
+ * Selected Video Paramaters | 2 | N | Video paramaters selected for the streaming sessions
+ * Selected Audio paramaters | 3 | N | Input Audio parameters selected for the streaming sessions
+ *
+ * The session control command TLV has a tlv8 encoded value that provides the response and session identifier
+ * Session Control Command:
+ * Name | Type | Length | Description
+ * Sessions Identifier | 1 | 16 | UUID identifying the session that identifies the command
+ * Command | 2 | 1 | 0 - end, 1 - start, 2 - suspend, 3 - resume, 4 - reconfigure, 5-255 - reserved
+ *
+ * The Selected Video parameters TLV has a tlv8 encoded value that provides the selected video attributes 
+ * such as codec information, image resolution, frame rate, RTP parameters etc., 
+ * The list of types for the TLVs is as follows:
+ * 
+ * Selected Video Paramaters:
+ * Name | Type | Length | Description
+ * Selected Video Codec type | 1 | 1 | type of video codec
+ * Selected Video Codec parameters | 2 | N | codec-specific parameters
+ * Selected Video Attributes | 3 | N | video attributes selcted for the session
+ * Selected Video RTP parameters | 4 | N | RTP parameters selcted for the video
+ * 
+ * The value of Video RTP parameters TLV is a TLV8-encoded list with the following types:
+ * 
+ * Video RTP Paramaters
+ * Name | Type | Length | Description
+ * Payload Type | 1 | 1 | Type of video codec
+ * Synchronization Source for Video | 2 | 4 | SSRC for video stream
+ * Maximum Bitrate | 3 | 2 | Maximum bit rate genrated by the codec in kbps and averaged over 1 second
+ * Min RTCP Interval | 4 | 4 | Minimum RTCP interval in seconds formatted as a 4 byte little endian ieee754 floating point value
+ * Max MTU | 5 | 2 | MTU that the IP camera must use to transmit video RTP packets
+ * 
+ * The Selected Audio parameters TLV has a tlv8 encoded value that provides the selected audio attributes 
+ * such as codec information, number of audio channels, RTP parameters etc., 
+ * The list of types for the TLVs is as follows:
+ * 
+ * Selected Audio Paramaters
+ * Name | Type | Length | Description
+ * Selected Audio Codec type | 1 | 1 | Type of codec: 2 - AAC-ELD, 3 - Opus, 5 - AMR, 6 - AMR-WB, 7-255 - reserved
+ * Selected Audio Codec parameters | 2 | N | Audio codec specific parameters
+ * Selected Audio RTP parameters | 3 | N | RTP parameters selected for the streaming session
+ * Comfort Noise | 4 | 1 | Boolean - A value of 1 indicates the Comfort Noise has been selected
+ * 
+ * The value of Audio RTP parameters TLV is a TLV8-encoded list with the following types:
+ * 
+ * Audio RTP Parameters
+ * Name | Type | Length | Description
+ * Payload type | 1 | 1 | Payload type as defined in RFC 3551
+ * SynchronizationSource for Audio | 2 | 4 | SSRC for audio stream
+ * Maximum Bitrate | 3 | 2 | Maximum bit rate generated by the codec in kbps and averaged over 1 second
+ * Min RTCP interval | 4 | 4 | Minimum RTCP interval in seconds formatted as a 4 byte little endian ieee754 floating point value
+ * Comfort Noise Payload Type | 6 | 1 | Only required when Comfort Noise is chosen in the Selected Audio Parameters TLV
+ * 
+ * @see HomeKit Accessory Protocol Specification R14
+ *      Section 9.91 Supported RTP Configuration
+ */
+/**@{*/
+#define kHAPCharacteristicDebugDescription_SelectedRTPStreamConfiguration "selected-rtp-stream-configuration"
+
+extern const HAPUUID kHAPCharacteristicType_SelectedRTPStreamConfiguration;
+/**@}*/
+
+/**
+ * Setup Endpoints.
+ * 
+ * The Setup Endpoints characteristic allows a controller to exchange IP address and port information with the IP camera. 
+ * This characteristic requires iOS 10 or later.
+ * 
+ * - Format: TLV8
+ * - Permissions: Paired Read, Paired Write
+ * 
+ * The write value of this characteristic is a TLV8-encoded list of the following parameters:
+ * 
+ * Setup Endpoints
+ * Name | Type | Length | Description
+ * Session ID | 1 | 16 | UUID identifying the sessions
+ * Controller Address | 3 | N | Address of the controller for the streaming session
+ * SRTP Parameters for Video | 4 | N | RTP parameters selected for the Video streaming session
+ * SRTP Parameters for Audio | 5 | N | RTP parameters selected for the Audio streaming session
+ * 
+ * The Controller Address TLV has a tlv8 encoded value that provides the IP address, and the port for the streaming session. 
+ * The list of types for the TLVs is as follows:
+ * 
+ * Controller Address
+ * Name | Type | Length | Description
+ * IP address version | 1 | 1 | Version of IP Address - 0 - IPv4, 1 - IPv6
+ * IP Address | 2 | N | IP address of the controller
+ * Video RTP port | 3 | 2 | Receive port of the controller for the video stream of the RTP session
+ * Audio RTP port | 4 | 2 | Receive port of the controller for the audio stream of the RTP session
+ * 
+ * Both the audio and video RTP port TLVs must be present even in case audio and video are multiplexed on the same port.
+ *
+ * The SRTP parameters TLV has a tlv8 encoded value that provides the SRTP crypto-suite and keys for the streaming session. 
+ * The accessory must populate a unique instance of this TLV for each supported SRTP Crypto Suite. 
+ * When the SRTP Crypto Suite is set to 2 (disabled), a zero-length SRTP Master Key as well 
+ * as a zero-length SRTP Master Salt must be presented.
+ * 
+ * The list of types for the TLVs is as follows:
+ * 
+ * SRTP Crypto Suite
+ * Name | Type | Length | Description
+ * SRTP Crypto Suite | 1 | 1 | Supported SRTP Crypto Suite: 
+ *                           | 0 - AES_CM_128_HMAC_SHA1_80
+ *                           | 1 - AES_256_CM_HMAC_SHA1_80
+ *                           | 2 - Disabled
+ *                           | 3-255 - reserved
+ * SRTP Master Key | 2 | 16 or 32 | Master key for the SRTP session:
+ *                                | 16 - AES_CM_128_HMAC_SHA1_80
+ *                                | 32 - AES_256_CM_HMAC_SHA1_80
+ * SRTP Master Salt | 3 | 14 | Master salt for the SRTP session
+ *                           
+ * 
+ * @see HomeKit Accessory Protocol Specification R14
+ *      Section 9.92 Setup Endpoints
+ */
+/**@{*/
+#define kHAPCharacteristicDebugDescription_SetupEndpoints "setup-endpoints"
+
+extern const HAPUUID kHAPCharacteristicType_SetupEndpoints;
+/**@}*/
+
+/**
+ * Mute.
+ * A Mute characteristic allows the control of audio input or output accessory respectively. 
+ * 
+ * This characteristic requires iOS 10 or later.
+ * 
+ * - Format: Bool
+ * - Permissions: Paired Read, Paired Write, Notify
+ * 
+ * If the audio RTP service can support muting, this characteristic must support Paired Write permission as well.
+ *
+ * @see HomeKit Accessory Protocol Specification R14
+ *      Section 9.61 Mute
+ */
+/**@{*/
+#define kHAPCharacteristicDebugDescription_Mute "mute"
+
+extern const HAPUUID kHAPCharacteristicType_Mute;
+/**@}*/
+
+/**
  * ADK Version.
  *
  * This characteristic describes a ADK version string x[.y[.z]];b (e.g. "100.1.1;1A1").
