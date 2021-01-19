@@ -12,7 +12,7 @@ brew install openssl@1.1
 brew install mbedtls --HEAD
 brew install wget
 brew install qemu
-brew cask install docker
+brew install --cask docker
 ```
 
 Run docker (Look in Spotlight/Applications folder). This is a one time instruction.
