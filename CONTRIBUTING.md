@@ -3,4 +3,4 @@ community, and agree by submitting the patch that your contributions are license
 [Apache 2.0 license](./LICENSE.md).
 
 Before submitting the pull request, please make sure you have tested your changes and that they follow the project
-[guidelines for contributing code](./Documentation/developing_with_adk.md).
+[guidelines for contributing code](./Documentation/coding_convention.md).
