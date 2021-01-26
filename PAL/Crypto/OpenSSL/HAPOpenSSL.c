@@ -153,6 +153,7 @@ void HAP_srp_verifier(
     uint8_t h[SHA512_BYTES];
     Calc_x(h, salt, user, user_len, pass, pass_len);
     WITH_BN(x, BN_bin2bn(h, sizeof h, NULL), {
+    	BN_set_flags(x, BN_FLG_CONSTTIME);
         WITH_BN(verifier, BN_new(), {
             SRP_gN* gN = Get_gN_3072();
             WITH_CTX(BN_CTX, BN_CTX_new(), {
@@ -186,6 +187,7 @@ static BIGNUM* Calc_B(BIGNUM* b, BIGNUM* v) {
     BIGNUM* B = BN_new();
     WITH_CTX(BN_CTX, BN_CTX_new(), {
         WITH_BN(gb, BN_new(), {
+        	BN_set_flags(b, BN_FLG_CONSTTIME);
             int ret = BN_mod_exp(gb, gN->g, b, gN->N, ctx);
             HAPAssert(!!ret);
             WITH_BN(k, Calc_k(gN), {
