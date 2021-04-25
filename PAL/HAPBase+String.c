@@ -109,6 +109,7 @@ HAPError HAPStringWithFormatAndArguments(char* bytes, size_t maxBytes, const cha
                     string = buffer;
                     strLen = 1;
                 } break;
+                case 'f':
                 case 'g': {
                     double d = (double) va_arg(arguments, double);
                     HAPError res = HAPFloatGetDescription(buffer, sizeof buffer, (float) d);

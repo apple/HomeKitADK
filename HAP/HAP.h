@@ -3418,6 +3418,10 @@ HAP_ENUM_BEGIN(uint8_t, HAPAccessoryCategory) {
 
     /** Shower Systems. */
     kHAPAccessoryCategory_ShowerSystems = 30,
+
+    /** Televisions. */
+    kHAPAccessoryCategory_Televisions = 31,
+
 } HAP_ENUM_END(uint8_t, HAPAccessoryCategory);
 
 /**

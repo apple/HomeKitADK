@@ -2942,6 +2942,27 @@ HAP_ENUM_BEGIN(uint8_t, HAPCharacteristicValue_IsConfigured) { /** Not Configure
 } HAP_ENUM_END(uint8_t, HAPCharacteristicValue_IsConfigured);
 /**@}*/
 
+
+#define kHAPCharacteristicDebugDescription_RemoteKey "remote-key"
+
+extern const HAPUUID kHAPCharacteristicType_RemoteKey;
+
+HAP_ENUM_BEGIN(uint8_t, kHAPCharacteristicValue_RemoteKey) {
+    kHAPCharacteristicValue_RemoteKeyRewind = 0,
+    kHAPCharacteristicValue_RemoteKeyFastForward = 1,
+    kHAPCharacteristicValue_RemoteKeyNextTrack = 2,
+    kHAPCharacteristicValue_RemoteKeyPrevTrack = 3,
+    kHAPCharacteristicValue_RemoteKeyArrowUp = 4,
+    kHAPCharacteristicValue_RemoteKeyArrowDown = 5,
+    kHAPCharacteristicValue_RemoteKeyArrowLeft = 6,
+    kHAPCharacteristicValue_RemoteKeyArrowRight = 7,
+    kHAPCharacteristicValue_RemoteKeySelect = 8,
+    kHAPCharacteristicValue_RemoteKeyBack = 9,
+    kHAPCharacteristicValue_RemoteKeyExit = 10,
+    kHAPCharacteristicValue_RemoteKeyPlayPause = 11,
+    kHAPCharacteristicValue_RemoteKeyInfo = 15
+} HAP_ENUM_END(uint8_t, kHAPCharacteristicValue_RemoteKey);
+
 /**
  * Active Identifier.
  *

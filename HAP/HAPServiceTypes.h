@@ -1114,6 +1114,11 @@ extern const HAPUUID kHAPServiceType_Microphone;
 extern const HAPUUID kHAPServiceType_Speaker;
 /**@}*/
 
+/**@{*/
+#define kHAPServiceDebugDescription_Television "television"
+
+extern const HAPUUID kHAPServiceType_Television;
+/**@}*/
 
 #if __has_feature(nullability)
 #pragma clang assume_nonnull end

@@ -228,6 +228,8 @@ const HAPUUID kHAPCharacteristicType_ValveType = HAPUUIDCreateAppleDefined(0xD5)
 
 const HAPUUID kHAPCharacteristicType_IsConfigured = HAPUUIDCreateAppleDefined(0xD6);
 
+const HAPUUID kHAPCharacteristicType_RemoteKey = HAPUUIDCreateAppleDefined(0xE1);
+
 const HAPUUID kHAPCharacteristicType_ActiveIdentifier = HAPUUIDCreateAppleDefined(0xE7);
 
 const HAPUUID kHAPCharacteristicType_SupportedVideoStreamConfiguration = HAPUUIDCreateAppleDefined(0x114);

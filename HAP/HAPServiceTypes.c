@@ -84,6 +84,8 @@ const HAPUUID kHAPServiceType_Valve = HAPUUIDCreateAppleDefined(0xD0);
 
 const HAPUUID kHAPServiceType_Faucet = HAPUUIDCreateAppleDefined(0xD7);
 
+const HAPUUID kHAPServiceType_Television = HAPUUIDCreateAppleDefined(0xD8);
+
 const HAPUUID kHAPServiceType_CameraRTPStreamManagement = HAPUUIDCreateAppleDefined(0x110);
 
 const HAPUUID kHAPServiceType_Microphone = HAPUUIDCreateAppleDefined(0x112);
