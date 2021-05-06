@@ -15,7 +15,7 @@ XCODE_SDK_PATH := $(shell $(XCODE_RUN) --show-sdk-path)
 
 CC := $(shell $(XCODE_RUN) -find clang)
 AR := ar
-COMPILER := $(shell $(CC) --version | grep "Target:" | cut -d ' ' -f 2)
+COMPILER := $(shell $(CC) -dumpmachine)
 DEBUGGER := lldb
 
 SRC_DIRS_Darwin := PAL/Darwin Common
