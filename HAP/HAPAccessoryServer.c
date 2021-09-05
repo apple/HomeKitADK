@@ -284,11 +284,11 @@ void HAPAccessoryServerRelease(HAPAccessoryServerRef* server_) {
 
     HAPMFiHWAuthRelease(&server->mfi);
 
-    HAPRawBufferZero(server_, sizeof *server_);
-
     if (server->transports.ip) {
         HAPNonnull(server->transports.ip)->serverEngine.uninstall();
     }
+
+    HAPRawBufferZero(server_, sizeof *server_);
 }
 
 HAP_RESULT_USE_CHECK
