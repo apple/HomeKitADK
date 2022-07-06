@@ -976,7 +976,7 @@ static HAPError HAPTLVReaderDecodeScalar(
             HAPTLVAppendToLog(tlvType, debugDescription, format_, value_, stringBuilder, nestingLevel);
         }
             return kHAPError_None;
-#define PROCESS_INTEGER_FORMAT(formatName, typeName, printfFormat, printfTypeName) \
+#define PROCESS_INTEGER_FORMAT(formatName, typeName, printfFormat, printfTypeName, intermediateTypeName) \
     do { \
         const formatName* fmt = format_; \
         typeName* value = HAPNonnullVoid(value_); \
@@ -992,7 +992,7 @@ static HAPError HAPTLVReaderDecodeScalar(
             return kHAPError_InvalidData; \
         } \
         for (size_t i = 0; i < numBytes; i++) { \
-            *value |= (typeName)(((const uint8_t*) bytes)[i] << (i * CHAR_BIT)); \
+            *value |= (typeName)(((intermediateTypeName)((const uint8_t*) bytes)[i]) << (i * CHAR_BIT)); \
         } \
         if (*value < fmt->constraints.minimumValue || *value > fmt->constraints.maximumValue) { \
             HAPLogTLV( \
@@ -1010,35 +1010,35 @@ static HAPError HAPTLVReaderDecodeScalar(
         HAPTLVAppendToLog(tlvType, debugDescription, format_, value_, stringBuilder, nestingLevel); \
     } while (0)
         case kHAPTLVFormatType_UInt8: {
-            PROCESS_INTEGER_FORMAT(HAPUInt8TLVFormat, uint8_t, "u", unsigned int);
+            PROCESS_INTEGER_FORMAT(HAPUInt8TLVFormat, uint8_t, "u", unsigned int, uint8_t);
         }
             return kHAPError_None;
         case kHAPTLVFormatType_UInt16: {
-            PROCESS_INTEGER_FORMAT(HAPUInt16TLVFormat, uint16_t, "u", unsigned int);
+            PROCESS_INTEGER_FORMAT(HAPUInt16TLVFormat, uint16_t, "u", unsigned int, uint16_t);
         }
             return kHAPError_None;
         case kHAPTLVFormatType_UInt32: {
-            PROCESS_INTEGER_FORMAT(HAPUInt32TLVFormat, uint32_t, "lu", unsigned long);
+            PROCESS_INTEGER_FORMAT(HAPUInt32TLVFormat, uint32_t, "lu", unsigned long, uint32_t);
         }
             return kHAPError_None;
         case kHAPTLVFormatType_UInt64: {
-            PROCESS_INTEGER_FORMAT(HAPUInt64TLVFormat, uint64_t, "llu", unsigned long long);
+            PROCESS_INTEGER_FORMAT(HAPUInt64TLVFormat, uint64_t, "llu", unsigned long long, uint64_t);
         }
             return kHAPError_None;
         case kHAPTLVFormatType_Int8: {
-            PROCESS_INTEGER_FORMAT(HAPInt8TLVFormat, int8_t, "d", int);
+            PROCESS_INTEGER_FORMAT(HAPInt8TLVFormat, int8_t, "d", int, uint8_t);
         }
             return kHAPError_None;
         case kHAPTLVFormatType_Int16: {
-            PROCESS_INTEGER_FORMAT(HAPInt16TLVFormat, int16_t, "d", int);
+            PROCESS_INTEGER_FORMAT(HAPInt16TLVFormat, int16_t, "d", int, uint16_t);
         }
             return kHAPError_None;
         case kHAPTLVFormatType_Int32: {
-            PROCESS_INTEGER_FORMAT(HAPInt32TLVFormat, int32_t, "ld", long);
+            PROCESS_INTEGER_FORMAT(HAPInt32TLVFormat, int32_t, "ld", long, uint32_t);
         }
             return kHAPError_None;
         case kHAPTLVFormatType_Int64: {
-            PROCESS_INTEGER_FORMAT(HAPInt64TLVFormat, int64_t, "lld", long long);
+            PROCESS_INTEGER_FORMAT(HAPInt64TLVFormat, int64_t, "lld", long long, uint64_t);
         }
             return kHAPError_None;
 #undef PROCESS_INTEGER_FORMAT
